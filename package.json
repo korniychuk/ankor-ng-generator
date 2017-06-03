@@ -1,11 +1,15 @@
 {
-  "name": "ng-generator",
+  "name": "ankor-ng-generator",
   "version": "1.0.0",
-  "description": "Angular 4 Entities Generator",
-  "main": "index.js",
+  "description": "Angular 4 Entities Generator.",
+  "main": "dist/main.js",
+  "bin": {
+    "ngg": "./bin/ngg"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --watch"
+    "prod": "webpack",
+    "dev": "webpack --watch",
+    "test": "npm run dev",
   },
   "author": "Anton Korniychuk <dev@korniychuk.pro>",
   "license": "MIT",
