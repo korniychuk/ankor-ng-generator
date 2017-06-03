@@ -26,6 +26,7 @@ prog
 
 if (isConfigOk) {
   const di: Di = new Di(prog, configLoader.config);
+  di.init();
   require('app/entities').default(di);
 }
 
