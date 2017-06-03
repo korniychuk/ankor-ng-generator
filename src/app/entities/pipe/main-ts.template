@@ -1,0 +1,35 @@
+import { Pipe, PipeTransform } from '@angular/core';<% if (debug) { %>
+
+import { DebugService, DebugLevel } from '<%= debug %>';<% } %>
+
+/**
+ * <% if (description) print(description); else { %>The pipe description ...<% } %>
+ *
+ * Usage:
+ *
+ *     value | <%= selector %>: 'argument'
+ *
+ * @example
+ *
+ *     {{ 'input value' | <%= selector %>: 'argument' }}
+ *     formats to: result value at here
+ *
+ */
+@Pipe({
+  name: '<%= selector %>',
+})
+export class <%= className %> implements PipeTransform {<% if (debug) { %>
+
+  private debug: DebugService;<% } %>
+
+  public constructor(<% if (debug) { %>
+    debug: DebugService,<% } %>
+  ) {<% if (debug) { %>
+    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>
+  }
+
+  public transform(value: any, ...args: any[]): any {
+    return null;
+  }
+
+}
