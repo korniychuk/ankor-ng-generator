@@ -70,6 +70,7 @@ export default ({prog, fs, config, str}: Di) => prog
       debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                   ? config.debuggerPackage
                   : false,
+      description: opts.description,
       style, styleFile,
       template, templateFile,
     };

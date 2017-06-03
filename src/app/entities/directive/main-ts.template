@@ -3,12 +3,12 @@ import { Directive, ElementRef, Renderer } from '@angular/core';<% if (debug) { 
 import { DebugLevel, DebugService } from '<%= debug %>';<% } %>
 
 /**
- * The directive description ...
-
+ * <% if (description) print(description); else { %>The directive description ...<% } %>
+ *
  * Usage:
  *
  *    <div <%= selector %>></div>
-
+ *
  */
 @Directive({
   selector: '[<%= selector %>]',
