@@ -9,7 +9,7 @@
   "scripts": {
     "prod": "webpack",
     "dev": "webpack --watch",
-    "test": "npm run dev",
+    "test": "npm run dev"
   },
   "author": "Anton Korniychuk <dev@korniychuk.pro>",
   "license": "MIT",
