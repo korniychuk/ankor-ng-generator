@@ -3,6 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { DebugService, DebugLevel } from '<%= debug %>';
 <% } %>
 
+/**
+ *
+ * @example
+ *
+ *     <<%= selector %>
+ *     ></<%= selector %>>
+ *
+ */
 @Component({
   selector: '<%= selector %>',<% if (templateFile) { %>
   templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>

@@ -530,12 +530,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('service', 'Generates angular service')
         .argument('<name>', 'Service name')
+        .option('-i, --init-method', 'Create init method')
         .action(function (args, opts, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'service');
         str.labelCreation(name);
         //
-        // 1.
+        // 1. Create the service file
         //
+        fs.tpl(name.file + ".ts", __webpack_require__(26), {
+            className: name.classTyped,
+            camelName: name.camel,
+            debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+                ? config.debuggerPackage
+                : false,
+            hasInit: opts.initMethod,
+        });
         str.labelDone();
     });
 });;
@@ -703,7 +712,7 @@ module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Component, OnInit } from '@angular/core';\n<% if (debug) { %>\nimport { DebugService, DebugLevel } from '<%= debug %>';\n<% } %>\n\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
+module.exports = "import { Component, OnInit } from '@angular/core';\n<% if (debug) { %>\nimport { DebugService, DebugLevel } from '<%= debug %>';\n<% } %>\n\n/**\n *\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *\n */\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
 /* 22 */
@@ -728,6 +737,12 @@ module.exports = require("inflected");
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.init();<% } %>\n  }<% if (hasInit) { %>\n\n  private init(): void {\n\n  }<% } %>\n\n}\n"
 
 /***/ })
 /******/ ]);

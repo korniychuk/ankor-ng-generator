@@ -1,6 +1,5 @@
 import { Case } from 'app/case';
 import { Di } from 'app/di';
-import chalk from 'chalk';
 
 export default ({prog, fs, config, str}: Di) => prog
   .command('guard', 'Generates angular guard service')
