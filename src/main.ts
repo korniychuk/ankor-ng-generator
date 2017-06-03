@@ -9,7 +9,7 @@ import { StringHelper } from 'app/string-helper';
 
 const configLoader = new ConfigLoader();
 if (!configLoader.hasConfig || !configLoader.load()) {
-  console.warn(chalk.red(`Error: Can not load config file.`));
+  console.warn(chalk.red(`\nError: Can not load config file.`));
 }
 
 const config: Config = configLoader.config;
@@ -23,13 +23,15 @@ prog
   })
 ;
 
-const di: Di = <Di> {};
+if (configLoader.hasConfig) {
+  const di: Di = <Di> {};
 
-di.prog = prog;
-di.config = config;
-di.fs = new FsWrapper(di);
-di.str = new StringHelper(di);
+  di.prog = prog;
+  di.config = config;
+  di.fs = new FsWrapper(di);
+  di.str = new StringHelper(di);
 
-require('app/entities').default(di);
+  require('app/entities').default(di);
+}
 
 prog.parse(process.argv);

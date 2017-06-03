@@ -583,7 +583,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var configLoader = new __WEBPACK_IMPORTED_MODULE_3_app_config_loader__["a" /* ConfigLoader */]();
 if (!configLoader.hasConfig || !configLoader.load()) {
-    console.warn(__WEBPACK_IMPORTED_MODULE_2_chalk___default.a.red("Error: Can not load config file."));
+    console.warn(__WEBPACK_IMPORTED_MODULE_2_chalk___default.a.red("\nError: Can not load config file."));
 }
 var config = configLoader.config;
 __WEBPACK_IMPORTED_MODULE_1_caporal___default.a
@@ -593,12 +593,14 @@ __WEBPACK_IMPORTED_MODULE_1_caporal___default.a
     configLoader.reset();
     configLoader.save();
 });
-var di = {};
-di.prog = __WEBPACK_IMPORTED_MODULE_1_caporal___default.a;
-di.config = config;
-di.fs = new __WEBPACK_IMPORTED_MODULE_4_app_fs_wrapper__["a" /* FsWrapper */](di);
-di.str = new __WEBPACK_IMPORTED_MODULE_5_app_string_helper__["a" /* StringHelper */](di);
-__webpack_require__(1).default(di);
+if (configLoader.hasConfig) {
+    var di = {};
+    di.prog = __WEBPACK_IMPORTED_MODULE_1_caporal___default.a;
+    di.config = config;
+    di.fs = new __WEBPACK_IMPORTED_MODULE_4_app_fs_wrapper__["a" /* FsWrapper */](di);
+    di.str = new __WEBPACK_IMPORTED_MODULE_5_app_string_helper__["a" /* StringHelper */](di);
+    __webpack_require__(1).default(di);
+}
 __WEBPACK_IMPORTED_MODULE_1_caporal___default.a.parse(process.argv);
 
 
