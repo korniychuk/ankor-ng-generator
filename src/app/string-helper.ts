@@ -1,4 +1,7 @@
+import chalk from 'chalk';
+
 import { Di } from 'app/di';
+import { Case } from 'app/case';
 
 export class StringHelper {
 
@@ -39,6 +42,14 @@ export class StringHelper {
 
   public trimRight(str: string): string {
     return str.replace(/[\s]+(?!\n)$/gm, '');
+  }
+
+  public labelCreation(name: Case): void {
+    console.log('\nCreation %s: "%s"\n', name.entityType, chalk.blue.bold(name.dash));
+  }
+
+  public labelDone(): void {
+    console.log(chalk.green('\nDone!\n'));
   }
 
 }

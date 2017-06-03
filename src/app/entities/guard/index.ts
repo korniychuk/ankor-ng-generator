@@ -1,5 +1,6 @@
 import { Case } from 'app/case';
 import { Di } from 'app/di';
+import chalk from 'chalk';
 
 export default ({prog, fs, config, str}: Di) => prog
   .command('guard', 'Generates angular guard service')
@@ -7,12 +8,12 @@ export default ({prog, fs, config, str}: Di) => prog
   .action((args, opts, logger) => {
     const name = Case.for(args.name, 'component');
 
-    logger.info('Creation guard: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
     // 1.
     //
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

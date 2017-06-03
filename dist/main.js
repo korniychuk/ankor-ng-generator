@@ -72,7 +72,7 @@
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Case; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inflected__);
 
 var Case = (function () {
@@ -155,7 +155,7 @@ module.exports = require("fs");
 "use strict";
 /* unused harmony export Config */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigLoader; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_find_config__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fs__);
@@ -352,7 +352,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
         var hasDir = !opts.inlineStyle || !opts.inlineTemplate;
-        logger.info('Creation component: "%s"\n\n', name.dash);
+        str.labelCreation(name);
         //
         // 1. Make dir
         //
@@ -409,7 +409,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 7. e2e test
         //
-        logger.info('\nDone!\n\n');
+        str.labelDone();
     });
 });;
 
@@ -428,12 +428,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .command('directive', 'Generates angular directive')
         .argument('<name>', 'Directive name')
         .action(function (args, opts, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        logger.info('Creation directive: "%s"\n\n', name.dash);
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'directive');
+        str.labelCreation(name);
         //
-        // 1.
+        // 1. Create the directive file
         //
-        logger.info('\nDone!\n\n');
+        str.labelDone();
     });
 });;
 
@@ -453,11 +453,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .argument('<name>', 'Guard service name')
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        logger.info('Creation guard: "%s"\n\n', name.dash);
+        str.labelCreation(name);
         //
         // 1.
         //
-        logger.info('\nDone!\n\n');
+        str.labelDone();
     });
 });;
 
@@ -477,11 +477,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .argument('<name>', 'Model name')
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        logger.info('Creation model: "%s"\n\n', name.dash);
+        str.labelCreation(name);
         //
         // 1.
         //
-        logger.info('\nDone!\n\n');
+        str.labelDone();
     });
 });;
 
@@ -501,11 +501,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .argument('<name>', 'Pipe name')
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        logger.info('Creation pipe: "%s"\n\n', name.dash);
+        str.labelCreation(name);
         //
         // 1.
         //
-        logger.info('\nDone!\n\n');
+        str.labelDone();
     });
 });;
 
@@ -525,11 +525,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .argument('<name>', 'Service name')
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        logger.info('Creation service: "%s"\n\n', name.dash);
+        str.labelCreation(name);
         //
         // 1.
         //
-        logger.info('\nDone!\n\n');
+        str.labelDone();
     });
 });;
 
@@ -542,8 +542,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsWrapper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_chalk__);
+
 
 
 var FsWrapper = (function () {
@@ -553,11 +556,11 @@ var FsWrapper = (function () {
     }
     FsWrapper.prototype.dir = function (dirName) {
         if (__WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(this.fullPath(dirName))) {
-            console.log("Dir:  " + dirName + " ... EXISTS");
+            console.log("%s:  " + dirName + " ...", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('Dir'), __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.yellow("EXISTS"));
         }
         else {
             __WEBPACK_IMPORTED_MODULE_0_fs___default.a.mkdirSync(this.fullPath(dirName));
-            console.log("Dir:  " + dirName + " ... OK");
+            console.log("%s:  " + dirName + " ... ", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('Dir'), __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green("OK"));
         }
     };
     FsWrapper.prototype.tplAsStr = function (rawTpl, vars) {
@@ -571,8 +574,10 @@ var FsWrapper = (function () {
         this.file(fileName, this.tplAsStr(rawTpl, vars));
     };
     FsWrapper.prototype.file = function (fileName, content) {
-        __WEBPACK_IMPORTED_MODULE_0_fs___default.a.writeFileSync(this.fullPath(fileName), content);
-        console.log("File: " + fileName + " ... OK");
+        var path = this.fullPath(fileName);
+        var exists = __WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(path);
+        __WEBPACK_IMPORTED_MODULE_0_fs___default.a.writeFileSync(path, content);
+        console.log("%s: " + fileName + " ... ", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('File'), exists ? __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.yellow('OVERWROTE') : __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green('OK'));
     };
     FsWrapper.prototype.fullPath = function (name) {
         return this.path + "/" + name;
@@ -588,6 +593,9 @@ var FsWrapper = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringHelper; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chalk__);
+
 var StringHelper = (function () {
     function StringHelper(_a) {
         var config = _a.config;
@@ -623,6 +631,12 @@ var StringHelper = (function () {
     StringHelper.prototype.trimRight = function (str) {
         return str.replace(/[\s]+(?!\n)$/gm, '');
     };
+    StringHelper.prototype.labelCreation = function (name) {
+        console.log('\nCreation %s: "%s"\n', name.entityType, __WEBPACK_IMPORTED_MODULE_0_chalk___default.a.blue.bold(name.dash));
+    };
+    StringHelper.prototype.labelDone = function () {
+        console.log(__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.green('\nDone!\n'));
+    };
     return StringHelper;
 }());
 
@@ -634,37 +648,36 @@ var StringHelper = (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_entities__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_caporal__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_caporal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_caporal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_chalk__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_config_loader__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_di__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_caporal__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_caporal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_caporal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_chalk__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_app_config_loader__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_di__ = __webpack_require__(5);
 
 
 
 
-
-var configLoader = new __WEBPACK_IMPORTED_MODULE_3_app_config_loader__["a" /* ConfigLoader */]();
+var configLoader = new __WEBPACK_IMPORTED_MODULE_2_app_config_loader__["a" /* ConfigLoader */]();
 var isConfigOk = configLoader.hasConfig && configLoader.load();
 if (!isConfigOk && process.argv[2] !== 'init') {
-    console.warn(__WEBPACK_IMPORTED_MODULE_2_chalk___default.a.red("\nError: Can not load config file."));
+    console.warn(__WEBPACK_IMPORTED_MODULE_1_chalk___default.a.red("\nError: Can not load config file."));
 }
 var version = __webpack_require__(6).version;
-__WEBPACK_IMPORTED_MODULE_1_caporal___default.a
+__WEBPACK_IMPORTED_MODULE_0_caporal___default.a
     .version(version)
     .command('init', 'Create\\Reset configuration file')
     .action(function (args, opts, logger) {
     configLoader.reset();
     configLoader.save();
-    logger.info(__WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green('Done!'));
+    logger.info(__WEBPACK_IMPORTED_MODULE_1_chalk___default.a.green('Done!'));
 });
 if (isConfigOk) {
-    var di = new __WEBPACK_IMPORTED_MODULE_4_app_di__["a" /* Di */](__WEBPACK_IMPORTED_MODULE_1_caporal___default.a, configLoader.config);
+    var di = new __WEBPACK_IMPORTED_MODULE_3_app_di__["a" /* Di */](__WEBPACK_IMPORTED_MODULE_0_caporal___default.a, configLoader.config);
+    di.init();
     __webpack_require__(1).default(di);
 }
-__WEBPACK_IMPORTED_MODULE_1_caporal___default.a.parse(process.argv);
+__WEBPACK_IMPORTED_MODULE_0_caporal___default.a.parse(process.argv);
 
 
 /***/ }),
@@ -686,19 +699,20 @@ module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 module.exports = "import { Component, OnInit } from '@angular/core';\n<% if (debug) { %>\nimport { DebugService, DebugLevel } from '<%= debug %>';\n<% } %>\n\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
-/* 22 */
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("find-config");
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("inflected");
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");

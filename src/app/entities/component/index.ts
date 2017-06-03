@@ -10,7 +10,7 @@ export default ({prog, fs, config, str}: Di) => prog
     const name = Case.for(args.name, 'component');
     const hasDir = !opts.inlineStyle || !opts.inlineTemplate;
 
-    logger.info('Creation component: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
     // 1. Make dir
@@ -85,6 +85,6 @@ export default ({prog, fs, config, str}: Di) => prog
     //
 
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

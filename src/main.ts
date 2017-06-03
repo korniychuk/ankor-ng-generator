@@ -1,4 +1,3 @@
-import './app/entities';
 import prog from 'caporal';
 import chalk from 'chalk';
 
