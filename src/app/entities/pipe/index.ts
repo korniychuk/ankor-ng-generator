@@ -10,7 +10,7 @@ export default ({prog, fs, config, str}: Di) => prog
     str.labelCreation(name);
 
     //
-    // 1.
+    // 1. Create the pipe file
     //
     fs.tpl(`${name.file}.ts`, require('./main-ts'), {
       selector: `${config.appPrefix}${name.class}`,
