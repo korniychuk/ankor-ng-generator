@@ -13,6 +13,9 @@ export class Config {
   public useUnitTests: boolean   = false;
   public useE2ETests: boolean    = false;
 
+  public sharedModuleEnabled: boolean = true;
+  public sharedModulePath: string = 'app/shared';
+
   public debuggerEnabled: boolean = true;
   public debuggerPackage: string = 'app/core/service';
 

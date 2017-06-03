@@ -129,6 +129,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __webpack_require__(11).default(di),
         __webpack_require__(12).default(di),
         __webpack_require__(13).default(di),
+        __webpack_require__(28).default(di),
         __webpack_require__(14).default(di),
         __webpack_require__(15).default(di),
     ]
@@ -172,6 +173,8 @@ var Config = (function () {
         this.sharedStylePath = '~styles/shared';
         this.useUnitTests = false;
         this.useE2ETests = false;
+        this.sharedModuleEnabled = true;
+        this.sharedModulePath = 'app/shared';
         this.debuggerEnabled = true;
         this.debuggerPackage = 'app/core/service';
         Object.assign(this, data);
@@ -513,7 +516,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'pipe');
         str.labelCreation(name);
         //
-        // 1.
+        // 1. Create the pipe file
         //
         fs.tpl(name.file + ".ts", __webpack_require__(27), {
             selector: "" + config.appPrefix + name.class,
@@ -761,6 +764,43 @@ module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\
 /***/ (function(module, exports) {
 
 module.exports = "import { Pipe, PipeTransform } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The pipe description ...<% } %>\n *\n * Usage:\n *\n *     value | <%= selector %>: 'argument'\n *\n * @example\n *\n *     {{ 'input value' | <%= selector %>: 'argument' }}\n *     formats to: result value at here\n *\n */\n@Pipe({\n  name: '<%= selector %>',\n})\nexport class <%= className %> implements PipeTransform {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public transform(value: any, ...args: any[]): any {\n    return null;\n  }\n\n}\n"
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
+    return prog
+        .command('module', 'Generates angular module')
+        .option('-s, --shared', 'Import shared module', prog.BOOL)
+        .argument('<name>', 'Module name')
+        .action(function (args, opts, logger) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
+        str.labelCreation(name);
+        //
+        // 1. The module file
+        //
+        fs.tpl(name.file + ".ts", __webpack_require__(29), {
+            className: name.classTyped,
+            shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
+                ? config.sharedModulePath
+                : false,
+        });
+        str.labelDone();
+    });
+});;
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %>\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ })
 /******/ ]);

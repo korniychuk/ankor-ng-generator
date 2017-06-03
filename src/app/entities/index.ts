@@ -7,6 +7,7 @@ export default (di: Di) =>  {
     require('./directive').default(di),
     require('./guard').default(di),
     require('./model').default(di),
+    require('./module').default(di),
     require('./pipe').default(di),
     require('./service').default(di),
   ]

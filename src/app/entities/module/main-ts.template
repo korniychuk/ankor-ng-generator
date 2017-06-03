@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';<% if (shared) { %>
+
+import { SharedModule } from '<%= shared %>';<% } %>
+
+@NgModule({
+  imports: [<% if (shared) { %>
+    SharedModule,<% } %>
+  ],
+  exports: [
+  ],
+  declarations: [
+  ],
+  providers: [
+  ],
+})
+export class <%= className %> {
+}
