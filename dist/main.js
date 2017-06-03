@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -72,7 +72,7 @@
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Case; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inflected__);
 
 var Case = (function () {
@@ -155,7 +155,7 @@ module.exports = require("fs");
 "use strict";
 /* unused harmony export Config */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigLoader; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_find_config__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fs__);
@@ -248,94 +248,67 @@ ConfigLoader.fileName = '.ng-generator.json';
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsWrapper; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Di; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_fs_wrapper__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_string_helper__ = __webpack_require__(17);
 
 
-var FsWrapper = (function () {
-    function FsWrapper(_a) {
-        var config = _a.config;
-        this.path = config.path();
+var Di = (function () {
+    function Di(prog, config) {
+        this.prog = prog;
+        this.config = config;
     }
-    FsWrapper.prototype.dir = function (dirName) {
-        if (__WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(this.fullPath(dirName))) {
-            console.log("Dir:  " + dirName + " ... EXISTS");
-        }
-        else {
-            __WEBPACK_IMPORTED_MODULE_0_fs___default.a.mkdirSync(this.fullPath(dirName));
-            console.log("Dir:  " + dirName + " ... OK");
-        }
+    Di.prototype.init = function () {
+        this.fs = new __WEBPACK_IMPORTED_MODULE_0_app_fs_wrapper__["a" /* FsWrapper */](this);
+        this.str = new __WEBPACK_IMPORTED_MODULE_1_app_string_helper__["a" /* StringHelper */](this);
     };
-    FsWrapper.prototype.tplAsStr = function (rawTpl, vars) {
-        if (vars === void 0) { vars = {}; }
-        var compiler = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.template(rawTpl);
-        var compiledTpl = compiler(vars);
-        return compiledTpl;
-    };
-    FsWrapper.prototype.tpl = function (fileName, rawTpl, vars) {
-        if (vars === void 0) { vars = {}; }
-        this.file(fileName, this.tplAsStr(rawTpl, vars));
-    };
-    FsWrapper.prototype.file = function (fileName, content) {
-        __WEBPACK_IMPORTED_MODULE_0_fs___default.a.writeFileSync(this.fullPath(fileName), content);
-        console.log("File: " + fileName + " ... OK");
-    };
-    FsWrapper.prototype.fullPath = function (name) {
-        return this.path + "/" + name;
-    };
-    return FsWrapper;
+    return Di;
 }());
 
 
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringHelper; });
-var StringHelper = (function () {
-    function StringHelper(_a) {
-        var config = _a.config;
-        this.indentation = config.indentation;
-    }
-    StringHelper.prototype.indent = function (text, size) {
-        var _this = this;
-        if (size === void 0) { size = 1; }
-        if (typeof text !== 'string') {
-            return '';
-        }
-        var res = text
-            .split('\n')
-            .map(function (line) {
-            return /^\s*$/.test(line) // is space only string?
-                ? ''
-                : _this.indentation.repeat(size) + line;
-        })
-            .join('\n');
-        return this.trimRight(res);
-    };
-    /*
-    public repeat(str: string, number: number): string {
-      let res = String(str);
-  
-      for (let i = 0, ilen = number - 2; i < ilen; i++) {
-        res += str;
-      }
-  
-      return res;
-    }
-    */
-    StringHelper.prototype.trimRight = function (str) {
-        return str.replace(/[\s]+(?!\n)$/gm, '');
-    };
-    return StringHelper;
-}());
-
-
+module.exports = {
+	"name": "ankor-ng-generator",
+	"version": "0.0.3",
+	"description": "Angular 4 Entities Generator.",
+	"main": "dist/main.js",
+	"bin": {
+		"ngg": "./bin/ngg"
+	},
+	"scripts": {
+		"prod": "webpack",
+		"dev": "webpack --watch",
+		"start": "npm run dev",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Anton Korniychuk <dev@korniychuk.pro>",
+	"license": "MIT",
+	"dependencies": {
+		"find-config": "^1.0.0",
+		"inflected": "^2.0.1",
+		"lodash": "^4.17.4",
+		"caporal": "~0.6.0",
+		"chalk": "~1.1.3"
+	},
+	"devDependencies": {
+		"@types/webpack": "^2.2.15",
+		"@types/node": "^6.0.0",
+		"@types/chalk": "^0.4.31",
+		"@types/inflected": "^1.1.29",
+		"@types/lodash": "^4.14.65",
+		"webpack": "~2.6.1",
+		"webpack-node-externals": "~1.6.0",
+		"typescript": "~2.3.4",
+		"tslib": "~1.7.1",
+		"json-loader": "~0.5.4",
+		"raw-loader": "~0.5.1",
+		"awesome-typescript-loader": "~3.1.3"
+	}
+};
 
 /***/ }),
 /* 7 */
@@ -411,10 +384,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
         var style, styleFile;
         if (opts.inlineStyle) {
-            style = str.indent(fs.tplAsStr(__webpack_require__(17), styleVars), 2);
+            style = str.indent(fs.tplAsStr(__webpack_require__(19), styleVars), 2);
         }
         else {
-            fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(18), styleVars);
+            fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(20), styleVars);
             styleFile = name.file + "." + config.styleExt;
         }
         //
@@ -429,7 +402,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             style: style, styleFile: styleFile,
             template: template, templateFile: templateFile,
         };
-        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(19), tsVars);
+        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(21), tsVars);
         //
         // 6. Unit-test
         //
@@ -566,6 +539,100 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsWrapper; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+
+
+var FsWrapper = (function () {
+    function FsWrapper(_a) {
+        var config = _a.config;
+        this.path = config.path();
+    }
+    FsWrapper.prototype.dir = function (dirName) {
+        if (__WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(this.fullPath(dirName))) {
+            console.log("Dir:  " + dirName + " ... EXISTS");
+        }
+        else {
+            __WEBPACK_IMPORTED_MODULE_0_fs___default.a.mkdirSync(this.fullPath(dirName));
+            console.log("Dir:  " + dirName + " ... OK");
+        }
+    };
+    FsWrapper.prototype.tplAsStr = function (rawTpl, vars) {
+        if (vars === void 0) { vars = {}; }
+        var compiler = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.template(rawTpl);
+        var compiledTpl = compiler(vars);
+        return compiledTpl;
+    };
+    FsWrapper.prototype.tpl = function (fileName, rawTpl, vars) {
+        if (vars === void 0) { vars = {}; }
+        this.file(fileName, this.tplAsStr(rawTpl, vars));
+    };
+    FsWrapper.prototype.file = function (fileName, content) {
+        __WEBPACK_IMPORTED_MODULE_0_fs___default.a.writeFileSync(this.fullPath(fileName), content);
+        console.log("File: " + fileName + " ... OK");
+    };
+    FsWrapper.prototype.fullPath = function (name) {
+        return this.path + "/" + name;
+    };
+    return FsWrapper;
+}());
+
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringHelper; });
+var StringHelper = (function () {
+    function StringHelper(_a) {
+        var config = _a.config;
+        this.indentation = config.indentation;
+    }
+    StringHelper.prototype.indent = function (text, size) {
+        var _this = this;
+        if (size === void 0) { size = 1; }
+        if (typeof text !== 'string') {
+            return '';
+        }
+        var res = text
+            .split('\n')
+            .map(function (line) {
+            return /^\s*$/.test(line) // is space only string?
+                ? ''
+                : _this.indentation.repeat(size) + line;
+        })
+            .join('\n');
+        return this.trimRight(res);
+    };
+    /*
+    public repeat(str: string, number: number): string {
+      let res = String(str);
+  
+      for (let i = 0, ilen = number - 2; i < ilen; i++) {
+        res += str;
+      }
+  
+      return res;
+    }
+    */
+    StringHelper.prototype.trimRight = function (str) {
+        return str.replace(/[\s]+(?!\n)$/gm, '');
+    };
+    return StringHelper;
+}());
+
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_entities__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_caporal__ = __webpack_require__(7);
@@ -573,69 +640,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_chalk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_config_loader__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_fs_wrapper__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_app_string_helper__ = __webpack_require__(6);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_di__ = __webpack_require__(5);
 
 
 
 
 
 var configLoader = new __WEBPACK_IMPORTED_MODULE_3_app_config_loader__["a" /* ConfigLoader */]();
-if (!configLoader.hasConfig || !configLoader.load()) {
+var isConfigOk = configLoader.hasConfig && configLoader.load();
+if (!isConfigOk && process.argv[2] !== 'init') {
     console.warn(__WEBPACK_IMPORTED_MODULE_2_chalk___default.a.red("\nError: Can not load config file."));
 }
-var config = configLoader.config;
+var version = __webpack_require__(6).version;
 __WEBPACK_IMPORTED_MODULE_1_caporal___default.a
-    .version('1.0.0')
-    .command('init', 'Create configuration file')
-    .action(function () {
+    .version(version)
+    .command('init', 'Create\\Reset configuration file')
+    .action(function (args, opts, logger) {
     configLoader.reset();
     configLoader.save();
+    logger.info(__WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green('Done!'));
 });
-if (configLoader.hasConfig) {
-    var di = {};
-    di.prog = __WEBPACK_IMPORTED_MODULE_1_caporal___default.a;
-    di.config = config;
-    di.fs = new __WEBPACK_IMPORTED_MODULE_4_app_fs_wrapper__["a" /* FsWrapper */](di);
-    di.str = new __WEBPACK_IMPORTED_MODULE_5_app_string_helper__["a" /* StringHelper */](di);
+if (isConfigOk) {
+    var di = new __WEBPACK_IMPORTED_MODULE_4_app_di__["a" /* Di */](__WEBPACK_IMPORTED_MODULE_1_caporal___default.a, configLoader.config);
     __webpack_require__(1).default(di);
 }
 __WEBPACK_IMPORTED_MODULE_1_caporal___default.a.parse(process.argv);
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = ":host {\n\n}\n"
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = "import { Component, OnInit } from '@angular/core';\n<% if (debug) { %>\nimport { DebugService, DebugLevel } from '<%= debug %>';\n<% } %>\n\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = require("find-config");
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("inflected");
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");

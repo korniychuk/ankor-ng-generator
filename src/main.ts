@@ -2,35 +2,30 @@ import './app/entities';
 import prog from 'caporal';
 import chalk from 'chalk';
 
-import { Config, ConfigLoader } from 'app/config-loader';
-import { FsWrapper } from 'app/fs-wrapper';
+import { ConfigLoader } from 'app/config-loader';
 import { Di } from 'app/di';
-import { StringHelper } from 'app/string-helper';
 
 const configLoader = new ConfigLoader();
-if (!configLoader.hasConfig || !configLoader.load()) {
+const isConfigOk = configLoader.hasConfig && configLoader.load();
+
+if (!isConfigOk && process.argv[2] !== 'init') {
   console.warn(chalk.red(`\nError: Can not load config file.`));
 }
 
-const config: Config = configLoader.config;
-
+const version = require('../package.json').version;
 prog
-  .version('1.0.0')
-  .command('init', 'Create configuration file')
-  .action(() => {
+  .version(version)
+  .command('init', 'Create\\Reset configuration file')
+  .action((args, opts, logger) => {
     configLoader.reset();
     configLoader.save();
+
+    logger.info(chalk.green('Done!'));
   })
 ;
 
-if (configLoader.hasConfig) {
-  const di: Di = <Di> {};
-
-  di.prog = prog;
-  di.config = config;
-  di.fs = new FsWrapper(di);
-  di.str = new StringHelper(di);
-
+if (isConfigOk) {
+  const di: Di = new Di(prog, configLoader.config);
   require('app/entities').default(di);
 }
 
