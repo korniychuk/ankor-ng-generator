@@ -101,12 +101,14 @@ var Config = (function () {
         if (data === void 0) { data = {}; }
         this.rootDir = 'src';
         this.outDir = 'dist';
+        this.appPrefix = 'app';
+        this.indentation = '  ';
         this.styleExt = 'scss';
         this.sharedStylePath = '~styles/shared';
         this.useUnitTests = false;
         this.useE2ETests = false;
-        this.appPrefix = 'app';
-        this.indentation = '  ';
+        this.debuggerEnabled = true;
+        this.debuggerPackage = 'app/service/index';
         Object.assign(this, data);
     }
     Config.prototype.path = function () {
@@ -296,74 +298,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = (function (_a) {
     var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
     prog
-        .command('comp', 'Generates angular component')
+        .command('component', 'Generates angular component')
         .argument('<name>', 'Component name')
-        .action(function (args, options, logger) {
+        .option('-t, --inline-template')
+        .option('-s, --inline-style')
+        .option('-d, --debug', 'Enable/Disable inject debug service', prog.BOOL)
+        .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
+        var hasDir = !opts.inlineStyle || !opts.inlineTemplate;
         logger.info('Creation component: "%s"\n\n', name.dash);
+        console.log('Opts: ', opts);
         //
         // 1. Make dir
         //
-        fs.dir(name.dash);
+        if (hasDir) {
+            fs.dir(name.dash);
+        }
         //
         // 2. Make index.ts file
         //
         //
         // 3. HTML template
         //
-        fs.tpl(name.fileInDir + ".html", __webpack_require__(9), {
+        var templateVars = {
             name: name.title,
-        });
+        };
+        var template, templateFile;
+        if (opts.inlineTemplate) {
+            template = str.indent(fs.tplAsStr(__webpack_require__(9), templateVars), 2);
+        }
+        else {
+            fs.tpl(name.fileInDir + ".html", __webpack_require__(9), templateVars);
+            templateFile = name.file + ".html";
+        }
         //
         // 4. Style file
         //
-        fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(10), {
+        var styleVars = {
             sharedStylePath: config.sharedStylePath,
-        });
+        };
+        var style, styleFile;
+        if (opts.inlineStyle) {
+            style = str.indent(fs.tplAsStr(__webpack_require__(17), styleVars), 2);
+        }
+        else {
+            fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(10), styleVars);
+            styleFile = name.file + "." + config.styleExt;
+        }
         //
         // 5. The component
         //
-        fs.tpl(name.fileInDir + ".ts", __webpack_require__(11), {
+        var tsVars = {
             selector: config.appPrefix + "-" + name.dash,
-            templateFile: name.file + ".html",
-            styleFile: name.file + ".scss",
             className: name.classTyped,
-        });
-        //
-        // 6. Unit-test
-        //
-        //
-        // 7. e2e test
-        //
-        logger.info('\nDone!\n\n');
-    });
-    prog
-        .command('in-comp', 'Generates inline angular component')
-        .argument('<name>', 'Component name')
-        .action(function (args, options, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        logger.info('Creation inline component: "%s"\n\n', name.dash);
-        //
-        // 3. HTML template
-        //
-        var template = fs.tplAsStr(__webpack_require__(9), {
-            name: name.title,
-        });
-        //
-        // 4. Style file
-        //
-        var style = fs.tplAsStr(__webpack_require__(17), {
-            sharedStylePath: config.sharedStylePath,
-        });
-        //
-        // 5. The inline component
-        //
-        fs.tpl(name.file + ".ts", __webpack_require__(16), {
-            selector: config.appPrefix + "-" + name.dash,
-            template: str.indent(template, 2),
-            style: str.indent(style, 2),
-            className: name.classTyped,
-        });
+            debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+                ? config.debuggerPackage
+                : false,
+            style: style, styleFile: styleFile,
+            template: template, templateFile: templateFile,
+        };
+        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(11), tsVars);
         //
         // 6. Unit-test
         //
@@ -432,7 +426,7 @@ module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector:    '<%= selector %>',\n  templateUrl: './<%= templateFile %>',\n  styleUrls:   [ './<%= styleFile %>' ],\n})\nexport class <%= className %> implements OnInit {\n  public constructor(\n  ) {\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
+module.exports = "import { Component, OnInit } from '@angular/core';\n<% if (debug) { %>\nimport { DebugService, DebugLevel } from '<%= debug %>';\n<% } %>\n\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
 /* 12 */
@@ -499,12 +493,7 @@ var StringHelper = (function () {
 
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: '<%= selector %>',\n  template: `\n<%= template %>\n  `,\n  styles:   [ `\n<%= style %>\n  ` ],\n})\nexport class <%= className %> implements OnInit {\n  public constructor(\n  ) {\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
-
-/***/ }),
+/* 16 */,
 /* 17 */
 /***/ (function(module, exports) {
 

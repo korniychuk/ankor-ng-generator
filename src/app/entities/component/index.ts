@@ -4,18 +4,25 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => {
 
   prog
-    .command('comp', 'Generates angular component')
+    .command('component', 'Generates angular component')
     .argument('<name>', 'Component name')
-    .action((args, options, logger) => {
+    .option('-t, --inline-template')
+    .option('-s, --inline-style')
+    .option('-d, --debug', 'Enable/Disable inject debug service', prog.BOOL)
+    .action((args, opts, logger) => {
       const name = Case.for(args.name, 'component');
+      const hasDir = !opts.inlineStyle || !opts.inlineTemplate;
 
       logger.info('Creation component: "%s"\n\n', name.dash);
 
+      console.log('Opts: ', opts);
 
       //
       // 1. Make dir
       //
-      fs.dir(name.dash);
+      if (hasDir) {
+        fs.dir(name.dash);
+      }
 
 
       //
@@ -26,28 +33,52 @@ export default ({prog, fs, config, str}: Di) => {
       //
       // 3. HTML template
       //
-      fs.tpl(`${name.fileInDir}.html`, require('./main-html'), {
+      const templateVars = {
         name: name.title,
-      });
+      };
+      let template: string, templateFile: string;
+      if (opts.inlineTemplate) {
+        template = str.indent(
+          fs.tplAsStr(require('./main-html'), templateVars),
+          2,
+        );
+      } else {
+        fs.tpl(`${name.fileInDir}.html`, require('./main-html'), templateVars);
+        templateFile = `${name.file}.html`;
+      }
 
 
       //
       // 4. Style file
       //
-      fs.tpl(`${name.fileInDir}.${config.styleExt}`, require('./main-scss'), {
+      const styleVars = {
         sharedStylePath: config.sharedStylePath,
-      });
+      };
+      let style: string, styleFile: string;
+      if (opts.inlineStyle) {
+        style = str.indent(
+          fs.tplAsStr(require('./inline-css'), styleVars),
+          2,
+        );
+      } else {
+        fs.tpl(`${name.fileInDir}.${config.styleExt}`, require('./main-scss'), styleVars);
+        styleFile = `${name.file}.${config.styleExt}`;
+      }
 
 
       //
       // 5. The component
       //
-      fs.tpl(`${name.fileInDir}.ts`, require('./main-ts'), {
+      const tsVars: any = {
         selector: `${config.appPrefix}-${name.dash}`,
-        templateFile: `${name.file}.html`,
-        styleFile: `${name.file}.scss`,
         className: name.classTyped,
-      });
+        debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+                 ? config.debuggerPackage
+                 : false,
+        style, styleFile,
+        template, templateFile,
+      };
+      fs.tpl(`${hasDir ? name.fileInDir : name.file}.ts`, require('./main-ts'), tsVars);
 
 
       //
@@ -62,52 +93,5 @@ export default ({prog, fs, config, str}: Di) => {
       logger.info('\nDone!\n\n');
     })
   ;
-
-  prog
-    .command('in-comp', 'Generates inline angular component')
-    .argument('<name>', 'Component name')
-    .action((args, options, logger) => {
-      const name = Case.for(args.name, 'component');
-
-      logger.info('Creation inline component: "%s"\n\n', name.dash);
-
-      //
-      // 3. HTML template
-      //
-      const template = fs.tplAsStr(require('./main-html'), {
-        name: name.title,
-      });
-
-
-      //
-      // 4. Style file
-      //
-      const style = fs.tplAsStr(require('./inline-css'), {
-        sharedStylePath: config.sharedStylePath,
-      });
-
-
-      //
-      // 5. The inline component
-      //
-      fs.tpl(`${name.file}.ts`, require('./inline-ts'), {
-        selector:  `${config.appPrefix}-${name.dash}`,
-        template:  str.indent(template, 2),
-        style:     str.indent(style, 2),
-        className: name.classTyped,
-      });
-
-
-      //
-      // 6. Unit-test
-      //
-
-      //
-      // 7. e2e test
-      //
-
-
-      logger.info('\nDone!\n\n');
-    })
 
 };

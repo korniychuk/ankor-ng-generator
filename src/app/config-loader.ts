@@ -4,12 +4,17 @@ import fs from 'fs';
 export class Config {
   public rootDir: string         = 'src';
   public outDir: string          = 'dist';
-  public styleExt: string        = 'scss';
-  public sharedStylePath: string = '~styles/shared';
-  public useUnitTests: boolean   = false;
-  public useE2ETests: boolean    = false;
   public appPrefix: string       = 'app';
   public indentation: string     = '  ';
+
+  public styleExt: string        = 'scss';
+  public sharedStylePath: string = '~styles/shared';
+
+  public useUnitTests: boolean   = false;
+  public useE2ETests: boolean    = false;
+
+  public debuggerEnabled: boolean = true;
+  public debuggerPackage: string = 'app/service/index';
 
   public constructor(data: Config = <Config> {}) {
     Object.assign(this, data);
