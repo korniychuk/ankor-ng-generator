@@ -1,0 +1,33 @@
+import { Directive, ElementRef, Renderer } from '@angular/core';<% if (debug) { %>
+
+import { DebugLevel, DebugService } from '<%= debug %>';<% } %>
+
+/**
+ * The directive description ...
+
+ * Usage:
+ *
+ *    <div <%= selector %>></div>
+
+ */
+@Directive({
+  selector: '[<%= selector %>]',
+})
+export class <%= className %> {<% if (debug) { %>
+
+  private debug: DebugService;<% } %>
+
+  public constructor(
+    private el: ElementRef,
+    private renderer: Renderer,<% if (debug) { %>
+    debug: DebugService,<% } %>
+  ) {<% if (debug) { %>
+    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>
+    this.init();
+  }
+
+  public init(): void {
+
+  }
+
+}

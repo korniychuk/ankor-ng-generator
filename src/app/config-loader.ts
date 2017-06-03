@@ -14,7 +14,7 @@ export class Config {
   public useE2ETests: boolean    = false;
 
   public debuggerEnabled: boolean = true;
-  public debuggerPackage: string = 'app/service/index';
+  public debuggerPackage: string = 'app/core/service';
 
   public constructor(data: Config = <Config> {}) {
     Object.assign(this, data);

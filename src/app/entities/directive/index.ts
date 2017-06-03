@@ -12,6 +12,13 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     // 1. Create the directive file
     //
+    fs.tpl(`${name.file}.ts`, require('./main-ts'), {
+      selector: `${config.appPrefix}${name.class}`,
+      className: name.classTyped,
+      debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+               ? config.debuggerPackage
+               : false,
+    });
 
     str.labelDone();
   })

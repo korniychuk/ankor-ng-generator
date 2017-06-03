@@ -173,7 +173,7 @@ var Config = (function () {
         this.useUnitTests = false;
         this.useE2ETests = false;
         this.debuggerEnabled = true;
-        this.debuggerPackage = 'app/service/index';
+        this.debuggerPackage = 'app/core/service';
         Object.assign(this, data);
     }
     Config.prototype.path = function () {
@@ -433,6 +433,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 1. Create the directive file
         //
+        fs.tpl(name.file + ".ts", __webpack_require__(22), {
+            selector: "" + config.appPrefix + name.class,
+            className: name.classTyped,
+            debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+                ? config.debuggerPackage
+                : false,
+        });
         str.labelDone();
     });
 });;
@@ -699,7 +706,12 @@ module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 module.exports = "import { Component, OnInit } from '@angular/core';\n<% if (debug) { %>\nimport { DebugService, DebugLevel } from '<%= debug %>';\n<% } %>\n\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
-/* 22 */,
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = "import { Directive, ElementRef, Renderer } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * The directive description ...\n\n * Usage:\n *\n *    <div <%= selector %>></div>\n\n */\n@Directive({\n  selector: '[<%= selector %>]',\n})\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(\n    private el: ElementRef,\n    private renderer: Renderer,<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n    this.init();\n  }\n\n  public init(): void {\n\n  }\n\n}\n"
+
+/***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
