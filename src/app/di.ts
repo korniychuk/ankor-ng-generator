@@ -1,10 +1,10 @@
-import { FsWrapper } from 'app/fs-wrapper';
+import { FsService } from 'app/services/fs.service';
 import { Config } from 'app/config-loader';
-import { StringHelper } from 'app/string-helper';
+import { StringService } from 'app/services/string.service';
 
 export class Di {
-  public fs: FsWrapper;
-  public str: StringHelper;
+  public fs: FsService;
+  public str: StringService;
 
   public constructor(
     public prog: any,
@@ -13,8 +13,8 @@ export class Di {
   }
 
   public init(): void {
-    this.fs = new FsWrapper(this);
-    this.str = new StringHelper(this);
+    this.fs = new FsService(this);
+    this.str = new StringService(this);
   }
 
 }

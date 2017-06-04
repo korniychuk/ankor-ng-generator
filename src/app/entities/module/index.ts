@@ -3,16 +3,24 @@ import { Di } from 'app/di';
 
 export default ({prog, fs, config, str}: Di) => prog
   .command('module', 'Generates angular module')
+  .option('-s, --shared', 'Import shared module', prog.BOOL)
   .argument('<name>', 'Module name')
   .action((args, opts, logger) => {
-    const name = Case.for(args.name, 'component');
+    const name = Case.for(args.name, 'module');
 
-    logger.info('Creation module: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
-    // 1.
+    // 1. The module file
     //
+    fs.tpl(`${name.file}.ts`, require('./main-ts'), {
+      className: name.classTyped,
+      humanTitle: name.title,
+      shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
+                ? config.sharedModulePath
+                : null,
+    });
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

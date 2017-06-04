@@ -10,7 +10,7 @@ export default ({prog, fs, config, str}: Di) => prog
     const name = Case.for(args.name, 'component');
     const hasDir = !opts.inlineStyle || !opts.inlineTemplate;
 
-    logger.info('Creation component: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
     // 1. Make dir
@@ -69,7 +69,8 @@ export default ({prog, fs, config, str}: Di) => prog
       className: name.classTyped,
       debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                   ? config.debuggerPackage
-                  : false,
+                  : null,
+      description: opts.description,
       style, styleFile,
       template, templateFile,
     };
@@ -85,6 +86,6 @@ export default ({prog, fs, config, str}: Di) => prog
     //
 
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

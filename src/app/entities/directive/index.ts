@@ -5,14 +5,22 @@ export default ({prog, fs, config, str}: Di) => prog
   .command('directive', 'Generates angular directive')
   .argument('<name>', 'Directive name')
   .action((args, opts, logger) => {
-    const name = Case.for(args.name, 'component');
+    const name = Case.for(args.name, 'directive');
 
-    logger.info('Creation directive: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
-    // 1.
+    // 1. Create the directive file
     //
+    fs.tpl(`${name.file}.ts`, require('./main-ts'), {
+      selector: `${config.appPrefix}${name.class}`,
+      className: name.classTyped,
+      debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+               ? config.debuggerPackage
+               : null,
+      description: opts.description,
+    });
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

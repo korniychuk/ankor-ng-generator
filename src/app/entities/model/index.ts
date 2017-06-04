@@ -7,12 +7,12 @@ export default ({prog, fs, config, str}: Di) => prog
   .action((args, opts, logger) => {
     const name = Case.for(args.name, 'component');
 
-    logger.info('Creation model: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
     // 1.
     //
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

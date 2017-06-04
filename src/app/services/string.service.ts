@@ -1,6 +1,9 @@
-import { Di } from 'app/di';
+import chalk from 'chalk';
 
-export class StringHelper {
+import { Di } from 'app/di';
+import { Case } from 'app/case';
+
+export class StringService {
 
   private indentation: string;
 
@@ -39,6 +42,14 @@ export class StringHelper {
 
   public trimRight(str: string): string {
     return str.replace(/[\s]+(?!\n)$/gm, '');
+  }
+
+  public labelCreation(name: Case, entityType?: string): void {
+    console.log('\nCreation %s: "%s"\n', entityType ? entityType : name.entityType, chalk.blue.bold(name.dash));
+  }
+
+  public labelDone(): void {
+    console.log(chalk.green('\nDone!\n'));
   }
 
 }

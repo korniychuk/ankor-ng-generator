@@ -1,9 +1,10 @@
 import fs from 'fs';
 import _ from 'lodash';
+import chalk from 'chalk';
 
 import { Di } from 'app/di';
 
-export class FsWrapper {
+export class FsService {
 
   private path: string;
 
@@ -13,10 +14,10 @@ export class FsWrapper {
 
   public dir(dirName: string): void {
     if (fs.existsSync(this.fullPath(dirName))) {
-      console.log(`Dir:  ${dirName} ... EXISTS`);
+      console.log(`%s:  ${dirName} ...`, chalk.cyan('Dir'), chalk.yellow(`EXISTS`));
     } else {
       fs.mkdirSync(this.fullPath(dirName));
-      console.log(`Dir:  ${dirName} ... OK`);
+      console.log(`%s:  ${dirName} ... `, chalk.cyan('Dir'), chalk.green(`OK`));
     }
   }
 
@@ -33,8 +34,11 @@ export class FsWrapper {
   }
 
   public file(fileName: string, content: string): void {
-    fs.writeFileSync(this.fullPath(fileName), content);
-    console.log(`File: ${fileName} ... OK`);
+    const path = this.fullPath(fileName);
+    const exists = fs.existsSync(path);
+
+    fs.writeFileSync(path, content);
+    console.log(`%s: ${fileName} ... `, chalk.cyan('File'), exists ? chalk.yellow('OVERWROTE') : chalk.green('OK'));
   }
 
   private fullPath(name: string): string {

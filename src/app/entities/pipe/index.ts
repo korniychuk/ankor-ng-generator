@@ -5,14 +5,22 @@ export default ({prog, fs, config, str}: Di) => prog
   .command('pipe', 'Generates angular pipe')
   .argument('<name>', 'Pipe name')
   .action((args, opts, logger) => {
-    const name = Case.for(args.name, 'component');
+    const name = Case.for(args.name, 'pipe');
 
-    logger.info('Creation pipe: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
-    // 1.
+    // 1. Create the pipe file
     //
+    fs.tpl(`${name.file}.ts`, require('./main-ts'), {
+      selector: `${config.appPrefix}${name.class}`,
+      className: name.classTyped,
+      debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+                   ? config.debuggerPackage
+                   : null,
+      description: opts.description,
+    });
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
 ;

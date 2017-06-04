@@ -4,15 +4,26 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('service', 'Generates angular service')
   .argument('<name>', 'Service name')
+  .option('-i, --init-method', 'Create init method')
   .action((args, opts, logger) => {
-    const name = Case.for(args.name, 'component');
+    const name = Case.for(args.name, 'service');
 
-    logger.info('Creation service: "%s"\n\n', name.dash);
+    str.labelCreation(name);
 
     //
-    // 1.
+    // 1. Create the service file
     //
+    fs.tpl(`${name.file}.ts`, require('./main-ts'), {
+      className: name.classTyped,
+      camelName: name.camel,
+      debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+               ? config.debuggerPackage
+               : null,
+      description: opts.description,
+      hasInit: opts.initMethod,
+    });
 
-    logger.info('\nDone!\n\n');
+    str.labelDone();
   })
+
 ;

@@ -1,0 +1,19 @@
+import { NgModule } from '@angular/core';<% if (shared) { %>
+
+import { SharedModule } from '<%= shared %>';<% } %>
+
+console.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');
+
+@NgModule({
+  imports: [<% if (shared) { %>
+    SharedModule,<% } %>
+  ],
+  exports: [
+  ],
+  declarations: [
+  ],
+  providers: [
+  ],
+})
+export class <%= className %> {
+}

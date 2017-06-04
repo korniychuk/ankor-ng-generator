@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-<% if (debug) { %>
-import { DebugService, DebugLevel } from '<%= debug %>';
-<% } %>
+import { Component, OnInit } from '@angular/core';<% if (debug) { %>
 
+import { DebugService, DebugLevel } from '<%= debug %>';<% } %>
+
+/**
+ * <% if (description) print(description); else { %>The component description ...<% } %>
+ *
+ * @example
+ *
+ *     <<%= selector %>
+ *     ></<%= selector %>>
+ *
+ */
 @Component({
   selector: '<%= selector %>',<% if (templateFile) { %>
   templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>

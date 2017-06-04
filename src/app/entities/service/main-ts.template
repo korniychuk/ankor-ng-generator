@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';<% if (debug) { %>
+
+import { DebugLevel, DebugService } from '<%= debug %>';<% } %>
+
+/**
+ * <% if (description) print(description); else { %>The service description ...<% } %>
+ *
+ * @example
+ *
+ *     class ... {
+ *       constructor(private <%= camelName %>: <%= className %>) {
+ *
+ *       }
+ *     }
+ *
+ */
+@Injectable()
+export class <%= className %> {<% if (debug) { %>
+
+  private debug: DebugService;<% } %>
+
+  public constructor(<% if (debug) { %>
+    debug: DebugService,<% } %>
+  ) {<% if (debug) { %>
+    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>
+    this.init();<% } %>
+  }<% if (hasInit) { %>
+
+  private init(): void {
+
+  }<% } %>
+
+}
