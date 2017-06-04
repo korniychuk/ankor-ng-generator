@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -72,7 +72,7 @@
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Case; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inflected__);
 
 var Case = (function () {
@@ -117,26 +117,9 @@ var Case = (function () {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_common_options__ = __webpack_require__(9);
-
-/* harmony default export */ __webpack_exports__["default"] = (function (di) {
-    [
-        __webpack_require__(10).default(di),
-        __webpack_require__(11).default(di),
-        __webpack_require__(12).default(di),
-        __webpack_require__(13).default(di),
-        __webpack_require__(28).default(di),
-        __webpack_require__(30).default(di),
-        __webpack_require__(14).default(di),
-        __webpack_require__(15).default(di),
-    ]
-        .forEach(function (prog) { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_app_common_options__["a" /* commonOptions */])(prog); });
-});;
-
+module.exports = require("chalk");
 
 /***/ }),
 /* 2 */
@@ -157,7 +140,7 @@ module.exports = require("fs");
 "use strict";
 /* unused harmony export Config */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigLoader; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_find_config__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fs__);
@@ -253,8 +236,8 @@ ConfigLoader.fileName = '.ng-generator.json';
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Di; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_fs_wrapper__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_string_helper__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_fs_wrapper__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_string_helper__ = __webpack_require__(19);
 
 
 var Di = (function () {
@@ -273,6 +256,30 @@ var Di = (function () {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_common_options__ = __webpack_require__(9);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (di) {
+    // Entities with common options
+    [
+        __webpack_require__(10).default(di),
+        __webpack_require__(11).default(di),
+        __webpack_require__(12).default(di),
+        __webpack_require__(13).default(di),
+        __webpack_require__(15).default(di),
+        __webpack_require__(16).default(di),
+        __webpack_require__(17).default(di),
+    ]
+        .forEach(function (prog) { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_app_common_options__["a" /* commonOptions */])(prog); });
+    __webpack_require__(14).default(di);
+});;
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -315,16 +322,10 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = require("caporal");
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = require("chalk");
+module.exports = require("caporal");
 
 /***/ }),
 /* 9 */
@@ -389,10 +390,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
         var style, styleFile;
         if (opts.inlineStyle) {
-            style = str.indent(fs.tplAsStr(__webpack_require__(19), styleVars), 2);
+            style = str.indent(fs.tplAsStr(__webpack_require__(21), styleVars), 2);
         }
         else {
-            fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(20), styleVars);
+            fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(22), styleVars);
             styleFile = name.file + "." + config.styleExt;
         }
         //
@@ -403,12 +404,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             className: name.classTyped,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                 ? config.debuggerPackage
-                : false,
+                : null,
             description: opts.description,
             style: style, styleFile: styleFile,
             template: template, templateFile: templateFile,
         };
-        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(21), tsVars);
+        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(23), tsVars);
         //
         // 6. Unit-test
         //
@@ -439,12 +440,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 1. Create the directive file
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(22), {
+        fs.tpl(name.file + ".ts", __webpack_require__(24), {
             selector: "" + config.appPrefix + name.class,
             className: name.classTyped,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                 ? config.debuggerPackage
-                : false,
+                : null,
             description: opts.description,
         });
         str.labelDone();
@@ -511,21 +512,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = (function (_a) {
     var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
     return prog
-        .command('pipe', 'Generates angular pipe')
-        .argument('<name>', 'Pipe name')
+        .command('module', 'Generates angular module')
+        .option('-s, --shared', 'Import shared module', prog.BOOL)
+        .argument('<name>', 'Module name')
         .action(function (args, opts, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'pipe');
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
         str.labelCreation(name);
         //
-        // 1. Create the pipe file
+        // 1. The module file
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(27), {
-            selector: "" + config.appPrefix + name.class,
+        fs.tpl(name.file + ".ts", __webpack_require__(25), {
             className: name.classTyped,
-            debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
-                ? config.debuggerPackage
-                : false,
-            description: opts.description,
+            humanTitle: name.title,
+            shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
+                ? config.sharedModulePath
+                : null,
         });
         str.labelDone();
     });
@@ -534,6 +535,101 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 /* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
+    return prog
+        .command('page', 'Generates angular module')
+        .option('-s, --shared', 'Import shared module', prog.BOOL)
+        .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, true)
+        .option('-c, --component-route', 'If true route of future component and component declaration will be added to the module', prog.BOOL, true)
+        .option('-u, --url', 'Specify component route url', null, '')
+        .argument('<name>', 'Page name')
+        .action(function (args, opts, logger) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
+        str.labelCreation(name, 'page module');
+        //
+        // 1. Create page directory
+        //
+        fs.dir("+" + name);
+        //
+        // 2. Create index file
+        //
+        var indexTpl = "export { " + name.classTyped + " } from './" + name.file + "';\n";
+        fs.file("+" + name + "/index.ts", indexTpl);
+        var routeObjectTpl = fs.tplAsStr(__webpack_require__(27), {
+            componentClass: name.class + "Component",
+            url: opts.url,
+        });
+        //
+        // 3. Routes file
+        //
+        if (!opts.inlineRoutes) {
+            fs.tpl("+" + name + "/" + name + ".routes.ts", __webpack_require__(28), {
+                componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
+                componentClass: name.class + "Component",
+                routeObject: str.indent(routeObjectTpl),
+            });
+        }
+        //
+        // 4. The module file
+        //
+        fs.tpl("+" + name + "/" + name.file + ".ts", __webpack_require__(26), {
+            className: name.classTyped,
+            componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
+            componentClass: name.class + "Component",
+            routeObject: str.indent(routeObjectTpl, 3),
+            routesFile: name + ".routes.ts",
+            inlineRoutes: opts.inlineRoutes,
+            humanTitle: name.title,
+            shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
+                ? config.sharedModulePath
+                : null,
+        });
+        str.labelDone();
+    });
+});;
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
+    return prog
+        .command('pipe', 'Generates angular pipe')
+        .argument('<name>', 'Pipe name')
+        .action(function (args, opts, logger) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'pipe');
+        str.labelCreation(name);
+        //
+        // 1. Create the pipe file
+        //
+        fs.tpl(name.file + ".ts", __webpack_require__(29), {
+            selector: "" + config.appPrefix + name.class,
+            className: name.classTyped,
+            debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
+                ? config.debuggerPackage
+                : null,
+            description: opts.description,
+        });
+        str.labelDone();
+    });
+});;
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -552,12 +648,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 1. Create the service file
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(26), {
+        fs.tpl(name.file + ".ts", __webpack_require__(30), {
             className: name.classTyped,
             camelName: name.camel,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                 ? config.debuggerPackage
-                : false,
+                : null,
             description: opts.description,
             hasInit: opts.initMethod,
         });
@@ -567,16 +663,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsWrapper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_chalk__);
 
 
@@ -620,12 +716,12 @@ var FsWrapper = (function () {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringHelper; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chalk__);
 
 var StringHelper = (function () {
@@ -675,14 +771,14 @@ var StringHelper = (function () {
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_caporal__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_caporal__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_caporal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_caporal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_chalk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_app_config_loader__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_di__ = __webpack_require__(5);
@@ -695,7 +791,7 @@ var isConfigOk = configLoader.hasConfig && configLoader.load();
 if (!isConfigOk && process.argv[2] !== 'init') {
     console.warn(__WEBPACK_IMPORTED_MODULE_1_chalk___default.a.red("\nError: Can not load config file."));
 }
-var version = __webpack_require__(6).version;
+var version = __webpack_require__(7).version;
 __WEBPACK_IMPORTED_MODULE_0_caporal___default.a
     .version(version)
     .command('init', 'Create\\Reset configuration file')
@@ -707,183 +803,88 @@ __WEBPACK_IMPORTED_MODULE_0_caporal___default.a
 if (isConfigOk) {
     var di = new __WEBPACK_IMPORTED_MODULE_3_app_di__["a" /* Di */](__WEBPACK_IMPORTED_MODULE_0_caporal___default.a, configLoader.config);
     di.init();
-    __webpack_require__(1).default(di);
+    __webpack_require__(6).default(di);
 }
 __WEBPACK_IMPORTED_MODULE_0_caporal___default.a.parse(process.argv);
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = ":host {\n\n}\n"
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = "import { Component, OnInit } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The component description ...<% } %>\n *\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *\n */\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = "import { Directive, ElementRef, Renderer } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The directive description ...<% } %>\n *\n * Usage:\n *\n *    <div <%= selector %>></div>\n *\n */\n@Directive({\n  selector: '[<%= selector %>]',\n})\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(\n    private el: ElementRef,\n    private renderer: Renderer,<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n    this.init();\n  }\n\n  public init(): void {\n\n  }\n\n}\n"
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-module.exports = require("find-config");
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-module.exports = require("inflected");
-
-/***/ }),
 /* 25 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The service description ...<% } %>\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.init();<% } %>\n  }<% if (hasInit) { %>\n\n  private init(): void {\n\n  }<% } %>\n\n}\n"
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-module.exports = "import { Pipe, PipeTransform } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The pipe description ...<% } %>\n *\n * Usage:\n *\n *     value | <%= selector %>: 'argument'\n *\n * @example\n *\n *     {{ 'input value' | <%= selector %>: 'argument' }}\n *     formats to: result value at here\n *\n */\n@Pipe({\n  name: '<%= selector %>',\n})\nexport class <%= className %> implements PipeTransform {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public transform(value: any, ...args: any[]): any {\n    return null;\n  }\n\n}\n"
-
-/***/ }),
-/* 28 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
-    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
-    return prog
-        .command('module', 'Generates angular module')
-        .option('-s, --shared', 'Import shared module', prog.BOOL)
-        .argument('<name>', 'Module name')
-        .action(function (args, opts, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
-        str.labelCreation(name);
-        //
-        // 1. The module file
-        //
-        fs.tpl(name.file + ".ts", __webpack_require__(29), {
-            className: name.classTyped,
-            humanTitle: name.title,
-            shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
-                ? config.sharedModulePath
-                : false,
-        });
-        str.labelDone();
-    });
-});;
-
-
-/***/ }),
-/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
-    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
-    return prog
-        .command('page', 'Generates angular module')
-        .option('-s, --shared', 'Import shared module', prog.BOOL)
-        .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, true)
-        .option('-c, --component-route', 'If true route of future component and component declaration will be added to the module', prog.BOOL, true)
-        .option('-u, --url', 'Specify component route url', null, '')
-        .argument('<name>', 'Page name')
-        .action(function (args, opts, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
-        str.labelCreation(name, 'page module');
-        //
-        // 1. Create page directory
-        //
-        fs.dir("+" + name);
-        //
-        // 2. Create index file
-        //
-        var indexTpl = "export { " + name.classTyped + " } from './" + name.file + "';\n";
-        fs.file("+" + name + "/index.ts", indexTpl);
-        var routeObjectTpl = fs.tplAsStr(__webpack_require__(32), {
-            componentClass: name.class + "Component",
-            url: opts.url,
-        });
-        //
-        // 3. Routes file
-        //
-        if (!opts.inlineRoutes) {
-            fs.tpl("+" + name + "/" + name + ".routes.ts", __webpack_require__(33), {
-                componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
-                componentClass: name.class + "Component",
-                routeObject: str.indent(routeObjectTpl),
-            });
-        }
-        //
-        // 4. The module file
-        //
-        fs.tpl("+" + name + "/" + name.file + ".ts", __webpack_require__(31), {
-            className: name.classTyped,
-            componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
-            componentClass: name.class + "Component",
-            routeObject: str.indent(routeObjectTpl, 3),
-            routesFile: name + ".routes.ts",
-            inlineRoutes: opts.inlineRoutes,
-            humanTitle: name.title,
-            shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
-                ? config.sharedModulePath
-                : false,
-        });
-        str.labelDone();
-    });
-});;
-
-
-/***/ }),
-/* 31 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = "import { NgModule } from '@angular/core';\nimport { RouterModule } from '@angular/router';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>\n<% } %><% if (!inlineRoutes) { %>\nimport { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>\n<%= routeObject %><% } %>\n    ]<% } %>),<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [<% if (componentFile) { %>\n    <%= componentClass %>,<% } %>\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
-/* 32 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = "{\n  path: '<%= url %>',\n  component: <%= componentClass %>,\n},\n"
 
 /***/ }),
-/* 33 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = "import { Routes } from '@angular/router';<% if (componentFile) { %>\n\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nexport const ROUTES: Routes = [<% if (componentFile) { %>\n<%= routeObject %><% } %>\n];\n"
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+module.exports = "import { Pipe, PipeTransform } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The pipe description ...<% } %>\n *\n * Usage:\n *\n *     value | <%= selector %>: 'argument'\n *\n * @example\n *\n *     {{ 'input value' | <%= selector %>: 'argument' }}\n *     formats to: result value at here\n *\n */\n@Pipe({\n  name: '<%= selector %>',\n})\nexport class <%= className %> implements PipeTransform {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public transform(value: any, ...args: any[]): any {\n    return null;\n  }\n\n}\n"
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The service description ...<% } %>\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.init();<% } %>\n  }<% if (hasInit) { %>\n\n  private init(): void {\n\n  }<% } %>\n\n}\n"
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = require("find-config");
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+module.exports = require("inflected");
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
 
 /***/ })
 /******/ ]);
