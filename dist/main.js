@@ -284,7 +284,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
@@ -353,11 +353,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('component', 'Generates angular component')
         .argument('<name>', 'Component name')
+        .option('-d, --directory', 'Create or no directory for the component', prog.BOOL)
         .option('-t, --inline-template')
         .option('-s, --inline-style')
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
-        var hasDir = !opts.inlineStyle || !opts.inlineTemplate;
+        var hasDir = opts.directory !== undefined
+            ? opts.direction
+            : (!opts.inlineStyle || !opts.inlineTemplate);
         str.labelCreation(name);
         //
         // 1. Make dir
@@ -379,7 +382,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             template = str.indent(fs.tplAsStr(__webpack_require__(2), templateVars), 2);
         }
         else {
-            fs.tpl(name.fileInDir + ".html", __webpack_require__(2), templateVars);
+            fs.tpl((hasDir ? name.fileInDir : name.file) + ".html", __webpack_require__(2), templateVars);
             templateFile = name.file + ".html";
         }
         //
@@ -393,7 +396,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             style = str.indent(fs.tplAsStr(__webpack_require__(21), styleVars), 2);
         }
         else {
-            fs.tpl(name.fileInDir + "." + config.styleExt, __webpack_require__(22), styleVars);
+            fs.tpl((hasDir ? name.fileInDir : name.file) + "." + config.styleExt, __webpack_require__(22), styleVars);
             styleFile = name.file + "." + config.styleExt;
         }
         //

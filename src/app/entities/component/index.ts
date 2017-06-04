@@ -4,11 +4,14 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('component', 'Generates angular component')
   .argument('<name>', 'Component name')
+  .option('-d, --directory', 'Create or no directory for the component', prog.BOOL)
   .option('-t, --inline-template')
   .option('-s, --inline-style')
   .action((args, opts, logger) => {
     const name = Case.for(args.name, 'component');
-    const hasDir = !opts.inlineStyle || !opts.inlineTemplate;
+    const hasDir = opts.directory !== undefined
+      ? opts.direction
+      : (!opts.inlineStyle || !opts.inlineTemplate);
 
     str.labelCreation(name);
 
@@ -38,7 +41,7 @@ export default ({prog, fs, config, str}: Di) => prog
         2,
       );
     } else {
-      fs.tpl(`${name.fileInDir}.html`, require('./main-html'), templateVars);
+      fs.tpl(`${hasDir ? name.fileInDir : name.file}.html`, require('./main-html'), templateVars);
       templateFile = `${name.file}.html`;
     }
 
@@ -56,7 +59,7 @@ export default ({prog, fs, config, str}: Di) => prog
         2,
       );
     } else {
-      fs.tpl(`${name.fileInDir}.${config.styleExt}`, require('./main-scss'), styleVars);
+      fs.tpl(`${hasDir ? name.fileInDir : name.file}.${config.styleExt}`, require('./main-scss'), styleVars);
       styleFile = `${name.file}.${config.styleExt}`;
     }
 
