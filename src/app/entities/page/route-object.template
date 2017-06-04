@@ -1,0 +1,4 @@
+{
+  path: '<%= url %>',
+  component: <%= componentClass %>,
+},

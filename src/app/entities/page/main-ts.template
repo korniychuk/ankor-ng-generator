@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';<% if (shared) { %>
+
+import { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>
+<% } %><% if (!inlineRoutes) { %>
+import { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>
+import { <%= componentClass %> } from './<%= componentFile %>';<% } %>
+
+console.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');
+
+@NgModule({
+  imports: [
+    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>
+<%= routeObject %><% } %>
+    ]<% } %>),<% if (shared) { %>
+    SharedModule,<% } %>
+  ],
+  exports: [
+  ],
+  declarations: [<% if (componentFile) { %>
+    <%= componentClass %>,<% } %>
+  ],
+  providers: [
+  ],
+})
+export class <%= className %> {
+}

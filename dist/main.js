@@ -130,6 +130,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __webpack_require__(12).default(di),
         __webpack_require__(13).default(di),
         __webpack_require__(28).default(di),
+        __webpack_require__(30).default(di),
         __webpack_require__(14).default(di),
         __webpack_require__(15).default(di),
     ]
@@ -662,8 +663,8 @@ var StringHelper = (function () {
     StringHelper.prototype.trimRight = function (str) {
         return str.replace(/[\s]+(?!\n)$/gm, '');
     };
-    StringHelper.prototype.labelCreation = function (name) {
-        console.log('\nCreation %s: "%s"\n', name.entityType, __WEBPACK_IMPORTED_MODULE_0_chalk___default.a.blue.bold(name.dash));
+    StringHelper.prototype.labelCreation = function (name, entityType) {
+        console.log('\nCreation %s: "%s"\n', entityType ? entityType : name.entityType, __WEBPACK_IMPORTED_MODULE_0_chalk___default.a.blue.bold(name.dash));
     };
     StringHelper.prototype.labelDone = function () {
         console.log(__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.green('\nDone!\n'));
@@ -787,6 +788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         fs.tpl(name.file + ".ts", __webpack_require__(29), {
             className: name.classTyped,
+            humanTitle: name.title,
             shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
                 ? config.sharedModulePath
                 : false,
@@ -800,7 +802,88 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %>\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
+    return prog
+        .command('page', 'Generates angular module')
+        .option('-s, --shared', 'Import shared module', prog.BOOL)
+        .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, true)
+        .option('-c, --component-route', 'If true route of future component and component declaration will be added to the module', prog.BOOL, true)
+        .option('-u, --url', 'Specify component route url', null, '')
+        .argument('<name>', 'Page name')
+        .action(function (args, opts, logger) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
+        str.labelCreation(name, 'page module');
+        //
+        // 1. Create page directory
+        //
+        fs.dir("+" + name);
+        //
+        // 2. Create index file
+        //
+        var indexTpl = "export { " + name.classTyped + " } from './" + name.file + "';\n";
+        fs.file("+" + name + "/index.ts", indexTpl);
+        var routeObjectTpl = fs.tplAsStr(__webpack_require__(32), {
+            componentClass: name.class + "Component",
+            url: opts.url,
+        });
+        //
+        // 3. Routes file
+        //
+        if (!opts.inlineRoutes) {
+            fs.tpl("+" + name + "/" + name + ".routes.ts", __webpack_require__(33), {
+                componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
+                componentClass: name.class + "Component",
+                routeObject: str.indent(routeObjectTpl),
+            });
+        }
+        //
+        // 4. The module file
+        //
+        fs.tpl("+" + name + "/" + name.file + ".ts", __webpack_require__(31), {
+            className: name.classTyped,
+            componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
+            componentClass: name.class + "Component",
+            routeObject: str.indent(routeObjectTpl, 3),
+            routesFile: name + ".routes.ts",
+            inlineRoutes: opts.inlineRoutes,
+            humanTitle: name.title,
+            shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
+                ? config.sharedModulePath
+                : false,
+        });
+        str.labelDone();
+    });
+});;
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = "import { NgModule } from '@angular/core';\nimport { RouterModule } from '@angular/router';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>\n<% } %><% if (!inlineRoutes) { %>\nimport { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>\n<%= routeObject %><% } %>\n    ]<% } %>),<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [<% if (componentFile) { %>\n    <%= componentClass %>,<% } %>\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+module.exports = "{\n  path: '<%= url %>',\n  component: <%= componentClass %>,\n},\n"
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+module.exports = "import { Routes } from '@angular/router';<% if (componentFile) { %>\n\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nexport const ROUTES: Routes = [<% if (componentFile) { %>\n<%= routeObject %><% } %>\n];\n"
 
 /***/ })
 /******/ ]);

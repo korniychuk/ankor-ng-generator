@@ -44,8 +44,8 @@ export class StringHelper {
     return str.replace(/[\s]+(?!\n)$/gm, '');
   }
 
-  public labelCreation(name: Case): void {
-    console.log('\nCreation %s: "%s"\n', name.entityType, chalk.blue.bold(name.dash));
+  public labelCreation(name: Case, entityType?: string): void {
+    console.log('\nCreation %s: "%s"\n', entityType ? entityType : name.entityType, chalk.blue.bold(name.dash));
   }
 
   public labelDone(): void {

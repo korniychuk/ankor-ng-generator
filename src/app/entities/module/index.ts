@@ -15,6 +15,7 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     fs.tpl(`${name.file}.ts`, require('./main-ts'), {
       className: name.classTyped,
+      humanTitle: name.title,
       shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
                 ? config.sharedModulePath
                 : false,

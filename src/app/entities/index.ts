@@ -8,6 +8,7 @@ export default (di: Di) =>  {
     require('./guard').default(di),
     require('./model').default(di),
     require('./module').default(di),
+    require('./page').default(di),
     require('./pipe').default(di),
     require('./service').default(di),
   ]
