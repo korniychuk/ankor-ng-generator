@@ -41,6 +41,10 @@ export class FsService {
     console.log(`%s: ${fileName} ... `, chalk.cyan('File'), exists ? chalk.yellow('OVERWROTE') : chalk.green('OK'));
   }
 
+  public cd(path: string): void {
+    process.chdir(path);
+  }
+
   private fullPath(name: string): string {
     return `${this.path}/${name}`;
   }

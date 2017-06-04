@@ -582,7 +582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 4. The module file
         //
-        fs.tpl("+" + name + "/" + name.file + ".ts", __webpack_require__(26), {
+        fs.tpl("+" + name.fileInDir + ".ts", __webpack_require__(26), {
             className: name.classTyped,
             componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
             componentClass: name.class + "Component",
@@ -594,6 +594,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ? config.sharedModulePath
                 : null,
         });
+        //
+        // 5. Change working directory to the created module directory
+        // ... doesn't work
+        //
+        // fs.cd(`./+${name}`);
         str.labelDone();
     });
 });;
@@ -709,6 +714,9 @@ var FsService = (function () {
         var exists = __WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(path);
         __WEBPACK_IMPORTED_MODULE_0_fs___default.a.writeFileSync(path, content);
         console.log("%s: " + fileName + " ... ", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('File'), exists ? __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.yellow('OVERWROTE') : __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green('OK'));
+    };
+    FsService.prototype.cd = function (path) {
+        process.chdir(path);
     };
     FsService.prototype.fullPath = function (name) {
         return this.path + "/" + name;
