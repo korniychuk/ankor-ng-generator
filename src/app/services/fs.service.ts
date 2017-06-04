@@ -4,7 +4,7 @@ import chalk from 'chalk';
 
 import { Di } from 'app/di';
 
-export class FsWrapper {
+export class FsService {
 
   private path: string;
 

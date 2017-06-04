@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { Di } from 'app/di';
 import { Case } from 'app/case';
 
-export class StringHelper {
+export class StringService {
 
   private indentation: string;
 

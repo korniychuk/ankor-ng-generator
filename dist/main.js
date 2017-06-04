@@ -236,8 +236,8 @@ ConfigLoader.fileName = '.ng-generator.json';
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Di; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_fs_wrapper__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_string_helper__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_services_fs_service__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_services_string_service__ = __webpack_require__(19);
 
 
 var Di = (function () {
@@ -246,8 +246,8 @@ var Di = (function () {
         this.config = config;
     }
     Di.prototype.init = function () {
-        this.fs = new __WEBPACK_IMPORTED_MODULE_0_app_fs_wrapper__["a" /* FsWrapper */](this);
-        this.str = new __WEBPACK_IMPORTED_MODULE_1_app_string_helper__["a" /* StringHelper */](this);
+        this.fs = new __WEBPACK_IMPORTED_MODULE_0_app_services_fs_service__["a" /* FsService */](this);
+        this.str = new __WEBPACK_IMPORTED_MODULE_1_app_services_string_service__["a" /* StringService */](this);
     };
     return Di;
 }());
@@ -667,7 +667,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(33);
@@ -677,12 +677,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var FsWrapper = (function () {
-    function FsWrapper(_a) {
+var FsService = (function () {
+    function FsService(_a) {
         var config = _a.config;
         this.path = config.path();
     }
-    FsWrapper.prototype.dir = function (dirName) {
+    FsService.prototype.dir = function (dirName) {
         if (__WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(this.fullPath(dirName))) {
             console.log("%s:  " + dirName + " ...", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('Dir'), __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.yellow("EXISTS"));
         }
@@ -691,26 +691,26 @@ var FsWrapper = (function () {
             console.log("%s:  " + dirName + " ... ", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('Dir'), __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green("OK"));
         }
     };
-    FsWrapper.prototype.tplAsStr = function (rawTpl, vars) {
+    FsService.prototype.tplAsStr = function (rawTpl, vars) {
         if (vars === void 0) { vars = {}; }
         var compiler = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.template(rawTpl);
         var compiledTpl = compiler(vars);
         return compiledTpl;
     };
-    FsWrapper.prototype.tpl = function (fileName, rawTpl, vars) {
+    FsService.prototype.tpl = function (fileName, rawTpl, vars) {
         if (vars === void 0) { vars = {}; }
         this.file(fileName, this.tplAsStr(rawTpl, vars));
     };
-    FsWrapper.prototype.file = function (fileName, content) {
+    FsService.prototype.file = function (fileName, content) {
         var path = this.fullPath(fileName);
         var exists = __WEBPACK_IMPORTED_MODULE_0_fs___default.a.existsSync(path);
         __WEBPACK_IMPORTED_MODULE_0_fs___default.a.writeFileSync(path, content);
         console.log("%s: " + fileName + " ... ", __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.cyan('File'), exists ? __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.yellow('OVERWROTE') : __WEBPACK_IMPORTED_MODULE_2_chalk___default.a.green('OK'));
     };
-    FsWrapper.prototype.fullPath = function (name) {
+    FsService.prototype.fullPath = function (name) {
         return this.path + "/" + name;
     };
-    return FsWrapper;
+    return FsService;
 }());
 
 
@@ -720,16 +720,16 @@ var FsWrapper = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringHelper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chalk__);
 
-var StringHelper = (function () {
-    function StringHelper(_a) {
+var StringService = (function () {
+    function StringService(_a) {
         var config = _a.config;
         this.indentation = config.indentation;
     }
-    StringHelper.prototype.indent = function (text, size) {
+    StringService.prototype.indent = function (text, size) {
         var _this = this;
         if (size === void 0) { size = 1; }
         if (typeof text !== 'string') {
@@ -756,16 +756,16 @@ var StringHelper = (function () {
       return res;
     }
     */
-    StringHelper.prototype.trimRight = function (str) {
+    StringService.prototype.trimRight = function (str) {
         return str.replace(/[\s]+(?!\n)$/gm, '');
     };
-    StringHelper.prototype.labelCreation = function (name, entityType) {
+    StringService.prototype.labelCreation = function (name, entityType) {
         console.log('\nCreation %s: "%s"\n', entityType ? entityType : name.entityType, __WEBPACK_IMPORTED_MODULE_0_chalk___default.a.blue.bold(name.dash));
     };
-    StringHelper.prototype.labelDone = function () {
+    StringService.prototype.labelDone = function () {
         console.log(__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.green('\nDone!\n'));
     };
-    return StringHelper;
+    return StringService;
 }());
 
 
