@@ -18,7 +18,7 @@ export default ({prog, fs, config, str}: Di) => prog
       camelName: name.camel,
       debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                ? config.debuggerPackage
-               : false,
+               : null,
       description: opts.description,
       hasInit: opts.initMethod,
     });

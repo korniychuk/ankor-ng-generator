@@ -18,7 +18,7 @@ export default ({prog, fs, config, str}: Di) => prog
       humanTitle: name.title,
       shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
                 ? config.sharedModulePath
-                : false,
+                : null,
     });
 
     str.labelDone();

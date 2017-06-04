@@ -69,7 +69,7 @@ export default ({prog, fs, config, str}: Di) => prog
       className: name.classTyped,
       debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                   ? config.debuggerPackage
-                  : false,
+                  : null,
       description: opts.description,
       style, styleFile,
       template, templateFile,
