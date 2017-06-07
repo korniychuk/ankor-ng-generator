@@ -79,8 +79,8 @@ var Case = (function () {
     function Case(name, entityType) {
         this.dash = name;
         this.title = __WEBPACK_IMPORTED_MODULE_0_inflected__["titleize"](name);
-        this.camel = __WEBPACK_IMPORTED_MODULE_0_inflected__["camelize"](name.replace('-', '_'), false);
-        this.class = __WEBPACK_IMPORTED_MODULE_0_inflected__["camelize"](name.replace('-', '_'));
+        this.camel = __WEBPACK_IMPORTED_MODULE_0_inflected__["camelize"](name.replace(/-/g, '_'), false);
+        this.class = __WEBPACK_IMPORTED_MODULE_0_inflected__["camelize"](name.replace(/-/g, '_'));
         this.entityType = entityType;
     }
     Object.defineProperty(Case.prototype, "file", {

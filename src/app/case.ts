@@ -24,8 +24,8 @@ export class Case {
   public constructor(name: string, entityType: string) {
     this.dash  = name;
     this.title = Inflected.titleize(name);
-    this.camel = Inflected.camelize(name.replace('-', '_'), false);
-    this.class = Inflected.camelize(name.replace('-', '_'));
+    this.camel = Inflected.camelize(name.replace(/-/g, '_'), false);
+    this.class = Inflected.camelize(name.replace(/-/g, '_'));
 
     this.entityType = entityType;
   }
