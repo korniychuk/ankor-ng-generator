@@ -17,7 +17,7 @@ export class Config {
   public sharedModulePath: string = 'app/shared';
 
   public debuggerEnabled: boolean = true;
-  public debuggerPackage: string = 'app/core/service';
+  public debuggerPackage: string = 'app/core/services';
 
   public constructor(data: Config = <Config> {}) {
     Object.assign(this, data);

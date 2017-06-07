@@ -160,7 +160,7 @@ var Config = (function () {
         this.sharedModuleEnabled = true;
         this.sharedModulePath = 'app/shared';
         this.debuggerEnabled = true;
-        this.debuggerPackage = 'app/core/service';
+        this.debuggerPackage = 'app/core/services';
         Object.assign(this, data);
     }
     Config.prototype.path = function () {
