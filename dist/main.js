@@ -286,7 +286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
