@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';<% if (shared) { %>
 
-import { SharedModule } from '<%= shared %>';<% } %>
+import { SharedModule } from '<%= shared %>';<% } %><% if (logAsync) { %>
 
-console.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');
+console.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');<% } %>
 
 @NgModule({
   imports: [<% if (shared) { %>

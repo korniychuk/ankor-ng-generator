@@ -47,7 +47,7 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     // 4. The module file
     //
-    fs.tpl(`+${name}/${name.file}.ts`, require('./main-ts'), {
+    fs.tpl(`+${name.fileInDir}.ts`, require('./main-ts'), {
       className: name.classTyped,
       componentFile: opts.componentRoute ? `${name.dash}.component.ts` : null,
       componentClass: `${name.class}Component`,
@@ -62,6 +62,12 @@ export default ({prog, fs, config, str}: Di) => prog
                 : null,
 
     });
+
+    //
+    // 5. Change working directory to the created module directory
+    // ... doesn't work
+    //
+    // fs.cd(`./+${name}`);
 
     str.labelDone();
   })

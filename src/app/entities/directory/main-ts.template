@@ -1,0 +1,12 @@
+<% if (declarations) { %>export const <%= name %>_DECLARATIONS = [
+];<% } %><% if (services) { %>
+export const <%= name %>_SERVICES = [
+];<% } %><% if (components) { %>
+export const <%= name %>_COMPONENTS = [
+];<% } %><% if (directives) { %>
+export const <%= name %>_DIRECTIVES = [
+];<% } %><% if (pipes) { %>
+export const <%= name %>_PIPES = [
+];<% } %><% customs.forEach((one) => { %>
+export const <%= one %> = [
+];<% }) %>
