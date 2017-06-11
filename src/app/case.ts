@@ -6,6 +6,7 @@ export class Case {
   public title: string;
   public camel: string;
   public class: string;
+  public constant: string;
 
   public entityType: string;
 
@@ -22,10 +23,11 @@ export class Case {
   }
 
   public constructor(name: string, entityType: string) {
-    this.dash  = name;
-    this.title = Inflected.titleize(name);
-    this.camel = Inflected.camelize(name.replace(/-/g, '_'), false);
-    this.class = Inflected.camelize(name.replace(/-/g, '_'));
+    this.dash     = name;
+    this.title    = Inflected.titleize(name);
+    this.camel    = Inflected.camelize(name.replace(/-/g, '_'), false);
+    this.class    = Inflected.camelize(name.replace(/-/g, '_'));
+    this.constant = name.replace(/-/g, '_').toUpperCase();
 
     this.entityType = entityType;
   }

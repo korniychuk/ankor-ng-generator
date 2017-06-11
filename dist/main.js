@@ -81,6 +81,7 @@ var Case = (function () {
         this.title = __WEBPACK_IMPORTED_MODULE_0_inflected__["titleize"](name);
         this.camel = __WEBPACK_IMPORTED_MODULE_0_inflected__["camelize"](name.replace(/-/g, '_'), false);
         this.class = __WEBPACK_IMPORTED_MODULE_0_inflected__["camelize"](name.replace(/-/g, '_'));
+        this.constant = name.replace(/-/g, '_').toUpperCase();
         this.entityType = entityType;
     }
     Object.defineProperty(Case.prototype, "file", {
@@ -275,6 +276,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     ]
         .forEach(function (prog) { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_app_common_options__["a" /* commonOptions */])(prog); });
     __webpack_require__(14).default(di);
+    __webpack_require__(34).default(di);
 });;
 
 
@@ -896,6 +898,60 @@ module.exports = require("inflected");
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
+
+/***/ }),
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
+    return prog
+        .command('directory', 'Generates directory with index.ts file')
+        .argument('<name>', 'Module name')
+        .option('-d, --declarations', 'Add *_DECLARATIONS constant')
+        .option('-s, --services', 'Add *_CUSTOM constant')
+        .option('-c, --customs', 'Add any your custom constant', prog.REPEATABLE)
+        .option('-o, --components', 'Add *_COMPONENTS constant')
+        .option('-p, --pipes', 'Add *_PIPES constant')
+        .option('-i, --directives', 'Add _DIRECTIVES constant')
+        .action(function (args, opts, logger) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, '');
+        str.labelCreation(name);
+        var customs = typeof opts.customs === 'string' && opts.customs ? [opts.customs] :
+            opts.customs instanceof Array ? opts.customs.filter(function (i) { return !!i; }) :
+                [];
+        console.log(JSON.stringify(customs));
+        customs = customs.map(function (oneCustomItem) { return __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(oneCustomItem, '').constant; });
+        //
+        // 1. Make directory
+        //
+        fs.dir(name.dash);
+        //
+        // 2. The module file
+        //
+        fs.tpl(name.dash + "/index.ts", __webpack_require__(35), {
+            name: name.constant,
+            declarations: opts.declarations,
+            services: opts.services,
+            customs: customs,
+            components: opts.components,
+            pipes: opts.pipes,
+            directives: opts.directives,
+        });
+        str.labelDone();
+    });
+});;
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+module.exports = "<% if (declarations) { %>export const <%= name %>_DECLARATIONS = [\n];<% } %><% if (services) { %>\nexport const <%= name %>_SERVICES = [\n];<% } %><% if (components) { %>\nexport const <%= name %>_COMPONENTS = [\n];<% } %><% if (directives) { %>\nexport const <%= name %>_DIRECTIVES = [\n];<% } %><% if (pipes) { %>\nexport const <%= name %>_PIPES = [\n];<% } %><% customs.forEach((one) => { %>\nexport const <%= one %> = [\n];<% }) %>\n"
 
 /***/ })
 /******/ ]);

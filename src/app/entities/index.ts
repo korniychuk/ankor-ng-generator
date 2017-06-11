@@ -15,4 +15,5 @@ export default (di: Di) =>  {
     .forEach((prog) => commonOptions(prog));
 
   require('./module').default(di);
+  require('./directory').default(di);
 };
