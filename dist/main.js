@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -72,7 +72,7 @@
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Case; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inflected___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inflected__);
 
 var Case = (function () {
@@ -141,7 +141,7 @@ module.exports = require("fs");
 "use strict";
 /* unused harmony export Config */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigLoader; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_find_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_find_config__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fs__);
@@ -237,8 +237,8 @@ ConfigLoader.fileName = '.ng-generator.json';
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Di; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_services_fs_service__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_services_string_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_services_fs_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_app_services_string_service__ = __webpack_require__(20);
 
 
 var Di = (function () {
@@ -268,15 +268,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     [
         __webpack_require__(10).default(di),
         __webpack_require__(11).default(di),
-        __webpack_require__(12).default(di),
         __webpack_require__(13).default(di),
-        __webpack_require__(15).default(di),
+        __webpack_require__(14).default(di),
         __webpack_require__(16).default(di),
         __webpack_require__(17).default(di),
+        __webpack_require__(18).default(di),
     ]
         .forEach(function (prog) { return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_app_common_options__["a" /* commonOptions */])(prog); });
-    __webpack_require__(14).default(di);
-    __webpack_require__(34).default(di);
+    __webpack_require__(15).default(di);
+    __webpack_require__(12).default(di);
 });;
 
 
@@ -286,7 +286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
@@ -395,10 +395,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
         var style, styleFile;
         if (opts.inlineStyle) {
-            style = str.indent(fs.tplAsStr(__webpack_require__(21), styleVars), 2);
+            style = str.indent(fs.tplAsStr(__webpack_require__(22), styleVars), 2);
         }
         else {
-            fs.tpl((hasDir ? name.fileInDir : name.file) + "." + config.styleExt, __webpack_require__(22), styleVars);
+            fs.tpl((hasDir ? name.fileInDir : name.file) + "." + config.styleExt, __webpack_require__(23), styleVars);
             styleFile = name.file + "." + config.styleExt;
         }
         //
@@ -414,7 +414,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             style: style, styleFile: styleFile,
             template: template, templateFile: templateFile,
         };
-        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(23), tsVars);
+        fs.tpl((hasDir ? name.fileInDir : name.file) + ".ts", __webpack_require__(24), tsVars);
         //
         // 6. Unit-test
         //
@@ -445,7 +445,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 1. Create the directive file
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(24), {
+        fs.tpl(name.file + ".ts", __webpack_require__(25), {
             selector: "" + config.appPrefix + name.class,
             className: name.classTyped,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
@@ -469,6 +469,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = (function (_a) {
     var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
     return prog
+        .command('directory', 'Generates directory with index.ts file')
+        .argument('<name>', 'Module name')
+        .option('-d, --declarations', 'Add *_DECLARATIONS constant')
+        .option('-s, --services', 'Add *_CUSTOM constant')
+        .option('-c, --customs', 'Add any your custom constant', prog.REPEATABLE)
+        .option('-o, --components', 'Add *_COMPONENTS constant')
+        .option('-p, --pipes', 'Add *_PIPES constant')
+        .option('-i, --directives', 'Add _DIRECTIVES constant')
+        .action(function (args, opts, logger) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, '');
+        str.labelCreation(name);
+        var customs = typeof opts.customs === 'string' && opts.customs ? [opts.customs] :
+            opts.customs instanceof Array ? opts.customs.filter(function (i) { return !!i; }) :
+                [];
+        console.log(JSON.stringify(customs));
+        customs = customs.map(function (oneCustomItem) { return __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(oneCustomItem, '').constant; });
+        //
+        // 1. Make directory
+        //
+        fs.dir(name.dash);
+        //
+        // 2. The module file
+        //
+        fs.tpl(name.dash + "/index.ts", __webpack_require__(26), {
+            name: name.constant,
+            declarations: opts.declarations,
+            services: opts.services,
+            customs: customs,
+            components: opts.components,
+            pipes: opts.pipes,
+            directives: opts.directives,
+        });
+        str.labelDone();
+    });
+});;
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
+    return prog
         .command('guard', 'Generates angular guard service')
         .argument('<name>', 'Guard service name')
         .action(function (args, opts, logger) {
@@ -483,7 +531,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -507,7 +555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -534,7 +582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 2. The module file
         //
-        fs.tpl((opts.directory ? name.fileInDir : name.file) + ".ts", __webpack_require__(25), {
+        fs.tpl((opts.directory ? name.fileInDir : name.file) + ".ts", __webpack_require__(27), {
             logAsync: opts.logAsync,
             className: name.classTyped,
             humanTitle: name.title,
@@ -548,7 +596,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -576,7 +624,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         var indexTpl = "export { " + name.classTyped + " } from './" + name.file + "';\n";
         fs.file("+" + name + "/index.ts", indexTpl);
-        var routeObjectTpl = fs.tplAsStr(__webpack_require__(27), {
+        var routeObjectTpl = fs.tplAsStr(__webpack_require__(29), {
             componentClass: name.class + "Component",
             url: opts.url,
         });
@@ -584,7 +632,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // 3. Routes file
         //
         if (!opts.inlineRoutes) {
-            fs.tpl("+" + name + "/" + name + ".routes.ts", __webpack_require__(28), {
+            fs.tpl("+" + name + "/" + name + ".routes.ts", __webpack_require__(30), {
                 componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
                 componentClass: name.class + "Component",
                 routeObject: str.indent(routeObjectTpl),
@@ -593,7 +641,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 4. The module file
         //
-        fs.tpl("+" + name.fileInDir + ".ts", __webpack_require__(26), {
+        fs.tpl("+" + name.fileInDir + ".ts", __webpack_require__(28), {
             className: name.classTyped,
             componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
             componentClass: name.class + "Component",
@@ -616,7 +664,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -634,7 +682,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 1. Create the pipe file
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(29), {
+        fs.tpl(name.file + ".ts", __webpack_require__(31), {
             selector: "" + config.appPrefix + name.class,
             className: name.classTyped,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
@@ -648,7 +696,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -667,7 +715,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 1. Create the service file
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(30), {
+        fs.tpl(name.file + ".ts", __webpack_require__(32), {
             className: name.classTyped,
             camelName: name.camel,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
@@ -682,14 +730,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_chalk__);
@@ -738,7 +786,7 @@ var FsService = (function () {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -793,7 +841,7 @@ var StringService = (function () {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -831,136 +879,88 @@ __WEBPACK_IMPORTED_MODULE_0_caporal___default.a.parse(process.argv);
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = ":host {\n\n}\n"
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = "import { Component, OnInit } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The component description ...<% } %>\n *\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *\n */\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = "import { Directive, ElementRef, Renderer } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The directive description ...<% } %>\n *\n * Usage:\n *\n *    <div <%= selector %>></div>\n *\n */\n@Directive({\n  selector: '[<%= selector %>]',\n})\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(\n    private el: ElementRef,\n    private renderer: Renderer,<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n    this.init();\n  }\n\n  public init(): void {\n\n  }\n\n}\n"
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (logAsync) { %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');<% } %>\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
-
-/***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "import { NgModule } from '@angular/core';\nimport { RouterModule } from '@angular/router';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>\n<% } %><% if (!inlineRoutes) { %>\nimport { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>\n<%= routeObject %><% } %>\n    ]<% } %>),<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [<% if (componentFile) { %>\n    <%= componentClass %>,<% } %>\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+module.exports = "<% if (declarations) { %>export const <%= name %>_DECLARATIONS = [\n];<% } %><% if (services) { %>\nexport const <%= name %>_SERVICES = [\n];<% } %><% if (components) { %>\nexport const <%= name %>_COMPONENTS = [\n];<% } %><% if (directives) { %>\nexport const <%= name %>_DIRECTIVES = [\n];<% } %><% if (pipes) { %>\nexport const <%= name %>_PIPES = [\n];<% } %><% customs.forEach((one) => { %>\nexport const <%= one %> = [\n];<% }) %>\n"
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "{\n  path: '<%= url %>',\n  component: <%= componentClass %>,\n},\n"
+module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (logAsync) { %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');<% } %>\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Routes } from '@angular/router';<% if (componentFile) { %>\n\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nexport const ROUTES: Routes = [<% if (componentFile) { %>\n<%= routeObject %><% } %>\n];\n"
+module.exports = "import { NgModule } from '@angular/core';\nimport { RouterModule } from '@angular/router';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>\n<% } %><% if (!inlineRoutes) { %>\nimport { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>\n<%= routeObject %><% } %>\n    ]<% } %>),<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [<% if (componentFile) { %>\n    <%= componentClass %>,<% } %>\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Pipe, PipeTransform } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The pipe description ...<% } %>\n *\n * Usage:\n *\n *     value | <%= selector %>: 'argument'\n *\n * @example\n *\n *     {{ 'input value' | <%= selector %>: 'argument' }}\n *     formats to: result value at here\n *\n */\n@Pipe({\n  name: '<%= selector %>',\n})\nexport class <%= className %> implements PipeTransform {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public transform(value: any, ...args: any[]): any {\n    return null;\n  }\n\n}\n"
+module.exports = "{\n  path: '<%= url %>',\n  component: <%= componentClass %>,\n},\n"
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The service description ...<% } %>\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.init();<% } %>\n  }<% if (hasInit) { %>\n\n  private init(): void {\n\n  }<% } %>\n\n}\n"
+module.exports = "import { Routes } from '@angular/router';<% if (componentFile) { %>\n\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nexport const ROUTES: Routes = [<% if (componentFile) { %>\n<%= routeObject %><% } %>\n];\n"
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = require("find-config");
+module.exports = "import { Pipe, PipeTransform } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The pipe description ...<% } %>\n *\n * Usage:\n *\n *     value | <%= selector %>: 'argument'\n *\n * @example\n *\n *     {{ 'input value' | <%= selector %>: 'argument' }}\n *     formats to: result value at here\n *\n */\n@Pipe({\n  name: '<%= selector %>',\n})\nexport class <%= className %> implements PipeTransform {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public transform(value: any, ...args: any[]): any {\n    return null;\n  }\n\n}\n"
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = require("inflected");
+module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The service description ...<% } %>\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.init();<% } %>\n  }<% if (hasInit) { %>\n\n  private init(): void {\n\n  }<% } %>\n\n}\n"
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("find-config");
 
 /***/ }),
 /* 34 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_app_case__ = __webpack_require__(0);
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
-    var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
-    return prog
-        .command('directory', 'Generates directory with index.ts file')
-        .argument('<name>', 'Module name')
-        .option('-d, --declarations', 'Add *_DECLARATIONS constant')
-        .option('-s, --services', 'Add *_CUSTOM constant')
-        .option('-c, --customs', 'Add any your custom constant', prog.REPEATABLE)
-        .option('-o, --components', 'Add *_COMPONENTS constant')
-        .option('-p, --pipes', 'Add *_PIPES constant')
-        .option('-i, --directives', 'Add _DIRECTIVES constant')
-        .action(function (args, opts, logger) {
-        var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, '');
-        str.labelCreation(name);
-        var customs = typeof opts.customs === 'string' && opts.customs ? [opts.customs] :
-            opts.customs instanceof Array ? opts.customs.filter(function (i) { return !!i; }) :
-                [];
-        console.log(JSON.stringify(customs));
-        customs = customs.map(function (oneCustomItem) { return __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(oneCustomItem, '').constant; });
-        //
-        // 1. Make directory
-        //
-        fs.dir(name.dash);
-        //
-        // 2. The module file
-        //
-        fs.tpl(name.dash + "/index.ts", __webpack_require__(35), {
-            name: name.constant,
-            declarations: opts.declarations,
-            services: opts.services,
-            customs: customs,
-            components: opts.components,
-            pipes: opts.pipes,
-            directives: opts.directives,
-        });
-        str.labelDone();
-    });
-});;
-
+module.exports = require("inflected");
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = "<% if (declarations) { %>export const <%= name %>_DECLARATIONS = [\n];<% } %><% if (services) { %>\nexport const <%= name %>_SERVICES = [\n];<% } %><% if (components) { %>\nexport const <%= name %>_COMPONENTS = [\n];<% } %><% if (directives) { %>\nexport const <%= name %>_DIRECTIVES = [\n];<% } %><% if (pipes) { %>\nexport const <%= name %>_PIPES = [\n];<% } %><% customs.forEach((one) => { %>\nexport const <%= one %> = [\n];<% }) %>\n"
+module.exports = require("lodash");
 
 /***/ })
 /******/ ]);
