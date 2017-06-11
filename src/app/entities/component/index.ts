@@ -4,7 +4,7 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('component', 'Generates angular component')
   .argument('<name>', 'Component name')
-  .option('-d, --directory', 'Create or no directory for the component', prog.BOOL)
+  .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, false)
   .option('-t, --inline-template')
   .option('-s, --inline-style')
   .action((args, opts, logger) => {

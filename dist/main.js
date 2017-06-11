@@ -355,7 +355,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('component', 'Generates angular component')
         .argument('<name>', 'Component name')
-        .option('-d, --directory', 'Create or no directory for the component', prog.BOOL)
+        .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, false)
         .option('-t, --inline-template')
         .option('-s, --inline-style')
         .action(function (args, opts, logger) {
@@ -518,15 +518,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var prog = _a.prog, fs = _a.fs, config = _a.config, str = _a.str;
     return prog
         .command('module', 'Generates angular module')
-        .option('-s, --shared', 'Import shared module', prog.BOOL)
         .argument('<name>', 'Module name')
+        .option('-s, --shared', 'Import shared module', prog.BOOL, true)
+        .option('-i, --directory', 'Create or no directory for the module', prog.BOOL, true)
+        .option('-a, --log-async', 'Show label about async module loading', prog.BOOL, true)
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
         str.labelCreation(name);
         //
-        // 1. The module file
+        // 1. Make dir
         //
-        fs.tpl(name.file + ".ts", __webpack_require__(25), {
+        if (opts.directory) {
+            fs.dir(name.dash);
+        }
+        //
+        // 2. The module file
+        //
+        fs.tpl((opts.directory ? name.fileInDir : name.file) + ".ts", __webpack_require__(25), {
+            logAsync: opts.logAsync,
             className: name.classTyped,
             humanTitle: name.title,
             shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
@@ -849,7 +858,7 @@ module.exports = "import { Directive, ElementRef, Renderer } from '@angular/core
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (logAsync) { %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');<% } %>\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
 /* 26 */
