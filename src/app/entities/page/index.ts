@@ -4,7 +4,7 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('page', 'Generates angular module')
   .option('-s, --shared', 'Import shared module', prog.BOOL)
-  .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, true)
+  .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, false)
   .option('-c, --component-route',
     'If true route of future component and component declaration will be added to the module',
     prog.BOOL,

@@ -619,7 +619,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('page', 'Generates angular module')
         .option('-s, --shared', 'Import shared module', prog.BOOL)
-        .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, true)
+        .option('-i, --inline-routes', 'If true separate routes file will be not created', prog.BOOL, false)
         .option('-c, --component-route', 'If true route of future component and component declaration will be added to the module', prog.BOOL, true)
         .option('-u, --url', 'Specify component route url', null, '')
         .argument('<name>', 'Page name')
