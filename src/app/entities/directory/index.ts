@@ -4,6 +4,7 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('directory', 'Generates directory with index.ts file')
   .argument('<name>', 'Module name')
+  .option('-n, --prefix-name', `Add '{prefix-name}_' to all constants`)
   .option('-d, --declarations', 'Add *_DECLARATIONS constant')
   .option('-s, --services', 'Add *_CUSTOM constant')
   .option('-c, --customs', 'Add any your custom constant', prog.REPEATABLE)
@@ -19,8 +20,6 @@ export default ({prog, fs, config, str}: Di) => prog
                             opts.customs instanceof Array ? opts.customs.filter((i) => !!i) :
                             [];
 
-    console.log(JSON.stringify(customs));
-
     customs = customs.map((oneCustomItem) => Case.for(oneCustomItem, '').constant);
 
     //
@@ -31,15 +30,19 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     // 2. The module file
     //
-    fs.tpl(`${name}/index.ts`, require('./main-ts'), {
-      name: name.constant,
-      declarations: opts.declarations,
-      services:     opts.services,
-      customs,
-      components:   opts.components,
-      pipes:        opts.pipes,
-      directives:   opts.directives,
-    });
+    const tpl = fs
+      .tplAsStr(require('./main-ts'), {
+        name: typeof opts.prefixName === 'string' ? Case.for(opts.prefixName, '').constant : undefined,
+
+        declarations: opts.declarations,
+        services:     opts.services,
+        customs,
+        components:   opts.components,
+        pipes:        opts.pipes,
+        directives:   opts.directives,
+      })
+      .replace(/\n{2,}$/m, '\n');
+    fs.file(`${name}/index.ts`, tpl);
 
     str.labelDone();
   })

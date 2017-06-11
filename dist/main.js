@@ -471,6 +471,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('directory', 'Generates directory with index.ts file')
         .argument('<name>', 'Module name')
+        .option('-n, --prefix-name', "Add '{prefix-name}_' to all constants")
         .option('-d, --declarations', 'Add *_DECLARATIONS constant')
         .option('-s, --services', 'Add *_CUSTOM constant')
         .option('-c, --customs', 'Add any your custom constant', prog.REPEATABLE)
@@ -483,7 +484,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var customs = typeof opts.customs === 'string' && opts.customs ? [opts.customs] :
             opts.customs instanceof Array ? opts.customs.filter(function (i) { return !!i; }) :
                 [];
-        console.log(JSON.stringify(customs));
         customs = customs.map(function (oneCustomItem) { return __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(oneCustomItem, '').constant; });
         //
         // 1. Make directory
@@ -492,15 +492,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 2. The module file
         //
-        fs.tpl(name + "/index.ts", __webpack_require__(26), {
-            name: name.constant,
+        var tpl = fs
+            .tplAsStr(__webpack_require__(26), {
+            name: typeof opts.prefixName === 'string' ? __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(opts.prefixName, '').constant : undefined,
             declarations: opts.declarations,
             services: opts.services,
             customs: customs,
             components: opts.components,
             pipes: opts.pipes,
             directives: opts.directives,
-        });
+        })
+            .replace(/\n{2,}$/m, '\n');
+        fs.file(name + "/index.ts", tpl);
         str.labelDone();
     });
 });;
@@ -914,7 +917,7 @@ module.exports = "import { Directive, ElementRef, Renderer } from '@angular/core
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<% if (declarations) { %>export const <%= name %>_DECLARATIONS = [\n];<% } %><% if (services) { %>\nexport const <%= name %>_SERVICES = [\n];<% } %><% if (components) { %>\nexport const <%= name %>_COMPONENTS = [\n];<% } %><% if (directives) { %>\nexport const <%= name %>_DIRECTIVES = [\n];<% } %><% if (pipes) { %>\nexport const <%= name %>_PIPES = [\n];<% } %><% customs.forEach((one) => { %>\nexport const <%= one %> = [\n];<% }) %>\n"
+module.exports = "<% if (declarations) { %>export const <%= name !== undefined ? name + '_' : '' %>DECLARATIONS = [\n];\n\n<% } %><% if (services) { %>export const <%= name !== undefined ? name + '_' : '' %>SERVICES = [\n];\n\n<% } %><% if (components) { %>export const <%= name !== undefined ? name + '_' : '' %>COMPONENTS = [\n];\n\n<% } %><% if (directives) { %>export const <%= name !== undefined ? name + '_' : '' %>DIRECTIVES = [\n];\n\n<% } %><% if (pipes) { %>export const <%= name !== undefined ? name + '_' : '' %>PIPES = [\n];\n\n<% } %><% customs.forEach((one) => { %>export const <%= name !== undefined ? name + '_' : '' %><%= one %> = [\n];\n\n<% }) %>\n"
 
 /***/ }),
 /* 27 */

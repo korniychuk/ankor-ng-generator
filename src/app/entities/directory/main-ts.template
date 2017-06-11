@@ -1,12 +1,19 @@
-<% if (declarations) { %>export const <%= name %>_DECLARATIONS = [
-];<% } %><% if (services) { %>
-export const <%= name %>_SERVICES = [
-];<% } %><% if (components) { %>
-export const <%= name %>_COMPONENTS = [
-];<% } %><% if (directives) { %>
-export const <%= name %>_DIRECTIVES = [
-];<% } %><% if (pipes) { %>
-export const <%= name %>_PIPES = [
-];<% } %><% customs.forEach((one) => { %>
-export const <%= one %> = [
-];<% }) %>
+<% if (declarations) { %>export const <%= name !== undefined ? name + '_' : '' %>DECLARATIONS = [
+];
+
+<% } %><% if (services) { %>export const <%= name !== undefined ? name + '_' : '' %>SERVICES = [
+];
+
+<% } %><% if (components) { %>export const <%= name !== undefined ? name + '_' : '' %>COMPONENTS = [
+];
+
+<% } %><% if (directives) { %>export const <%= name !== undefined ? name + '_' : '' %>DIRECTIVES = [
+];
+
+<% } %><% if (pipes) { %>export const <%= name !== undefined ? name + '_' : '' %>PIPES = [
+];
+
+<% } %><% customs.forEach((one) => { %>export const <%= name !== undefined ? name + '_' : '' %><%= one %> = [
+];
+
+<% }) %>
