@@ -492,7 +492,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         // 2. The module file
         //
-        fs.tpl(name.dash + "/index.ts", __webpack_require__(26), {
+        fs.tpl(name + "/index.ts", __webpack_require__(26), {
             name: name.constant,
             declarations: opts.declarations,
             services: opts.services,
@@ -570,6 +570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .option('-s, --shared', 'Import shared module', prog.BOOL, true)
         .option('-i, --directory', 'Create or no directory for the module', prog.BOOL, true)
         .option('-a, --log-async', 'Show label about async module loading', prog.BOOL, true)
+        .option('-x, --index', 'Add index.ts file to module directory', prog.BOOL, true)
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'module');
         str.labelCreation(name);
@@ -580,7 +581,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             fs.dir(name.dash);
         }
         //
-        // 2. The module file
+        // 2. Create index file
+        //
+        if (opts.index && opts.directory) {
+            var indexTpl = "export { " + name.classTyped + " } from './" + name.file + "';\n";
+            fs.file(name + "/index.ts", indexTpl);
+        }
+        //
+        // 3. The module file
         //
         fs.tpl((opts.directory ? name.fileInDir : name.file) + ".ts", __webpack_require__(27), {
             logAsync: opts.logAsync,

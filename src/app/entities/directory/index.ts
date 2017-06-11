@@ -31,7 +31,7 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     // 2. The module file
     //
-    fs.tpl(`${name.dash}/index.ts`, require('./main-ts'), {
+    fs.tpl(`${name}/index.ts`, require('./main-ts'), {
       name: name.constant,
       declarations: opts.declarations,
       services:     opts.services,
