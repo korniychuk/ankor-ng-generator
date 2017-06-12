@@ -337,7 +337,7 @@ module.exports = require("caporal");
 /* harmony export (immutable) */ __webpack_exports__["a"] = commonOptions;
 function commonOptions(prog) {
     return prog
-        .option('-d, --debug', 'Enable/Disable inject debug service', prog.BOOL)
+        .option('-d, --debug', 'Enable/Disable inject debug service', prog.BOOL, true)
         .option('-m, --description', 'Class description');
 }
 
@@ -355,13 +355,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('component', 'Generates angular component')
         .argument('<name>', 'Component name')
-        .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, false)
+        .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, true)
         .option('-t, --inline-template')
         .option('-s, --inline-style')
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
         var hasDir = opts.directory !== undefined
-            ? opts.direction
+            ? opts.directory
             : (!opts.inlineStyle || !opts.inlineTemplate);
         str.labelCreation(name);
         //

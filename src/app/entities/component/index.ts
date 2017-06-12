@@ -4,13 +4,13 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('component', 'Generates angular component')
   .argument('<name>', 'Component name')
-  .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, false)
+  .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, true)
   .option('-t, --inline-template')
   .option('-s, --inline-style')
   .action((args, opts, logger) => {
     const name = Case.for(args.name, 'component');
     const hasDir = opts.directory !== undefined
-      ? opts.direction
+      ? opts.directory
       : (!opts.inlineStyle || !opts.inlineTemplate);
 
     str.labelCreation(name);
