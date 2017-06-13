@@ -355,9 +355,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return prog
         .command('component', 'Generates angular component')
         .argument('<name>', 'Component name')
-        .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, true)
-        .option('-t, --inline-template')
-        .option('-s, --inline-style')
+        .option('-i, --directory', 'Create or no directory for the component', prog.BOOL)
+        .option('-t, --inline-template', false)
+        .option('-s, --inline-style', false)
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
         var hasDir = opts.directory !== undefined

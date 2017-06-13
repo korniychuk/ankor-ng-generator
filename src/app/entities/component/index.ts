@@ -4,9 +4,9 @@ import { Di } from 'app/di';
 export default ({prog, fs, config, str}: Di) => prog
   .command('component', 'Generates angular component')
   .argument('<name>', 'Component name')
-  .option('-i, --directory', 'Create or no directory for the component', prog.BOOL, true)
-  .option('-t, --inline-template')
-  .option('-s, --inline-style')
+  .option('-i, --directory', 'Create or no directory for the component', prog.BOOL)
+  .option('-t, --inline-template', false)
+  .option('-s, --inline-style', false)
   .action((args, opts, logger) => {
     const name = Case.for(args.name, 'component');
     const hasDir = opts.directory !== undefined
