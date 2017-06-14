@@ -38,7 +38,7 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     if (!opts.inlineRoutes) {
       fs.tpl(`+${name}/${name}.routes.ts`, require('./routes-ts'), {
-        componentFile: opts.componentRoute ? `${name.dash}.component.ts` : null,
+        componentFile: opts.componentRoute ? `${name.dash}.component` : null,
         componentClass: `${name.class}Component`,
         routeObject: str.indent(routeObjectTpl),
       })
@@ -49,7 +49,7 @@ export default ({prog, fs, config, str}: Di) => prog
     //
     fs.tpl(`+${name.fileInDir}.ts`, require('./main-ts'), {
       className: name.classTyped,
-      componentFile: opts.componentRoute ? `${name.dash}.component.ts` : null,
+      componentFile: opts.componentRoute ? `${name.dash}.component` : null,
       componentClass: `${name.class}Component`,
 
       routeObject: str.indent(routeObjectTpl, 3),

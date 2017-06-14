@@ -644,7 +644,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         if (!opts.inlineRoutes) {
             fs.tpl("+" + name + "/" + name + ".routes.ts", __webpack_require__(30), {
-                componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
+                componentFile: opts.componentRoute ? name.dash + ".component" : null,
                 componentClass: name.class + "Component",
                 routeObject: str.indent(routeObjectTpl),
             });
@@ -654,7 +654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //
         fs.tpl("+" + name.fileInDir + ".ts", __webpack_require__(28), {
             className: name.classTyped,
-            componentFile: opts.componentRoute ? name.dash + ".component.ts" : null,
+            componentFile: opts.componentRoute ? name.dash + ".component" : null,
             componentClass: name.class + "Component",
             routeObject: str.indent(routeObjectTpl, 3),
             routesFile: name + ".routes.ts",
