@@ -1,13 +1,22 @@
 import { Case } from 'app/case';
 import { Di } from 'app/di';
+import { CommonOptions } from 'app/common-options';
+
+interface Options extends CommonOptions {
+  directory: boolean;
+  inlineStyle: boolean;
+  inlineTemplate: boolean;
+  forRoute: boolean;
+}
 
 export default ({prog, fs, config, str}: Di) => prog
   .command('component', 'Generates angular component')
   .argument('<name>', 'Component name')
   .option('-i, --directory', 'Create or no directory for the component', prog.BOOL)
-  .option('-t, --inline-template', false)
-  .option('-s, --inline-style', false)
-  .action((args, opts, logger) => {
+  .option('-t, --inline-template', '', prog.BOOL, false)
+  .option('-s, --inline-style', '', prog.BOOL, false)
+  .option('-r, --for-route', 'Generate component without selector', prog.BOOL, false)
+  .action((args, opts: Options, logger) => {
     const name = Case.for(args.name, 'component');
     const hasDir = opts.directory !== undefined
       ? opts.directory
@@ -68,11 +77,11 @@ export default ({prog, fs, config, str}: Di) => prog
     // 5. The component
     //
     const tsVars: any = {
-      selector: `${config.appPrefix}-${name.dash}`,
+      selector: opts.forRoute ? undefined : `${config.appPrefix}-${name.dash}`,
       className: name.classTyped,
       debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                   ? config.debuggerPackage
-                  : null,
+                  : undefined,
       description: opts.description,
       style, styleFile,
       template, templateFile,

@@ -286,7 +286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
@@ -356,8 +356,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         .command('component', 'Generates angular component')
         .argument('<name>', 'Component name')
         .option('-i, --directory', 'Create or no directory for the component', prog.BOOL)
-        .option('-t, --inline-template', false)
-        .option('-s, --inline-style', false)
+        .option('-t, --inline-template', '', prog.BOOL, false)
+        .option('-s, --inline-style', '', prog.BOOL, false)
+        .option('-r, --for-route', 'Generate component without selector', prog.BOOL, false)
         .action(function (args, opts, logger) {
         var name = __WEBPACK_IMPORTED_MODULE_0_app_case__["a" /* Case */].for(args.name, 'component');
         var hasDir = opts.directory !== undefined
@@ -405,11 +406,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // 5. The component
         //
         var tsVars = {
-            selector: config.appPrefix + "-" + name.dash,
+            selector: opts.forRoute ? undefined : config.appPrefix + "-" + name.dash,
             className: name.classTyped,
             debug: opts.debug || (opts.debug === undefined && config.debuggerEnabled)
                 ? config.debuggerPackage
-                : null,
+                : undefined,
             description: opts.description,
             style: style, styleFile: styleFile,
             template: template, templateFile: templateFile,
@@ -905,7 +906,7 @@ module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Component, OnInit } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The component description ...<% } %>\n *\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *\n */\n@Component({\n  selector: '<%= selector %>',<% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
+module.exports = "import { Component, OnInit } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The component description ...<% } %><% if (selector) { %>\n *\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *<% } %>\n */\n@Component({<% if (selector) { %>\n  selector: '<%= selector %>',<% } %><% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
 /* 25 */
