@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';<% if (debug) { %>
 
 import { DebugService, DebugLevel } from '<%= debug %>';<% } %>
-
+<% if (description || selector) { %>
 /**<% if (description) { %>
  * <%= description %>
  *<% } /* The component description ... */ %><% if (selector) { %>
@@ -10,7 +10,7 @@ import { DebugService, DebugLevel } from '<%= debug %>';<% } %>
  *     <<%= selector %>
  *     ></<%= selector %>>
  *<% } %>
- */
+ */<% } %>
 @Component({<% if (selector) { %>
   selector: '<%= selector %>',<% } %><% if (templateFile) { %>
   templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>

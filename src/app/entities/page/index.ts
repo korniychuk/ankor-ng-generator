@@ -53,7 +53,7 @@ export default ({prog, fs, config, str}: Di) => prog
       componentClass: `${name.class}Component`,
 
       routeObject: str.indent(routeObjectTpl, 3),
-      routesFile: `${name}.routes.ts`,
+      routesFile: `${name}.routes`,
       inlineRoutes: opts.inlineRoutes,
 
       humanTitle: name.title,

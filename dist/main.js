@@ -658,7 +658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             componentFile: opts.componentRoute ? name.dash + ".component" : null,
             componentClass: name.class + "Component",
             routeObject: str.indent(routeObjectTpl, 3),
-            routesFile: name + ".routes.ts",
+            routesFile: name + ".routes",
             inlineRoutes: opts.inlineRoutes,
             humanTitle: name.title,
             shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
@@ -906,7 +906,7 @@ module.exports = "@import '<%= sharedStylePath %>';\n\n:host {\n\n}\n"
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Component, OnInit } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n\n/**<% if (description) { %>\n * <%= description %>\n *<% } /* The component description ... */ %><% if (selector) { %>\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *<% } %>\n */\n@Component({<% if (selector) { %>\n  selector: '<%= selector %>',<% } %><% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
+module.exports = "import { Component, OnInit } from '@angular/core';<% if (debug) { %>\n\nimport { DebugService, DebugLevel } from '<%= debug %>';<% } %>\n<% if (description || selector) { %>\n/**<% if (description) { %>\n * <%= description %>\n *<% } /* The component description ... */ %><% if (selector) { %>\n * @example\n *\n *     <<%= selector %>\n *     ></<%= selector %>>\n *<% } %>\n */<% } %>\n@Component({<% if (selector) { %>\n  selector: '<%= selector %>',<% } %><% if (templateFile) { %>\n  templateUrl: './<%= templateFile %>',<% } %><% if (template) { %>\n\n  template: `\n<%= template %>\n  `,<% } %><% if (styleFile) { %>\n  styleUrls: [ './<%= styleFile %>' ],<% } %><% if (style) { %>\n\n  styles:   [ `\n<%= style %>\n  ` ],<% } %>\n})\nexport class <%= className %> implements OnInit {<% if (debug) { %>\n\n  private debug: DebugService;\n<% } %>\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>\n  }\n\n  public ngOnInit() {\n  }\n\n}\n"
 
 /***/ }),
 /* 25 */
