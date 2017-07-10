@@ -1,4 +1,4 @@
-import { OnInit, Directive, ElementRef, Renderer } from '@angular/core';<% if (debug) { %>
+import { OnInit, Directive, ElementRef, Renderer2 } from '@angular/core';<% if (debug) { %>
 
 import { DebugLevel, DebugService } from '<%= debug %>';<% } %>
 
@@ -19,7 +19,7 @@ export class <%= className %> implements OnInit {<% if (debug) { %>
 
   public constructor(
     private el: ElementRef,
-    private renderer: Renderer,<% if (debug) { %>
+    private renderer: Renderer2,<% if (debug) { %>
     debug: DebugService,<% } %>
   ) {<% if (debug) { %>
     this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %>
