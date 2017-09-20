@@ -1,6 +1,6 @@
 {
   "name": "ankor-ng-generator",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Angular 4 Entities Generator.",
   "main": "dist/main.js",
   "bin": {

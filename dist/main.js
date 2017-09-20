@@ -162,6 +162,9 @@ var Config = (function () {
         this.sharedModulePath = 'app/shared';
         this.debuggerEnabled = true;
         this.debuggerPackage = 'app/core/services';
+        this.envDevName = 'development';
+        this.envProdName = 'production';
+        this.envTestName = 'test';
         Object.assign(this, data);
     }
     Config.prototype.path = function () {
@@ -286,7 +289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
@@ -601,6 +604,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
                 ? config.sharedModulePath
                 : null,
+            envDevName: config.envDevName,
         });
         str.labelDone();
     });
@@ -664,6 +668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
                 ? config.sharedModulePath
                 : null,
+            envDevName: config.envDevName,
         });
         //
         // 5. Change working directory to the created module directory
@@ -924,13 +929,13 @@ module.exports = "<% if (declarations) { %>export const <%= name !== undefined ?
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (logAsync) { %>\n\nconsole.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');<% } %>\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+module.exports = "import { NgModule } from '@angular/core';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (logAsync) { %>\n\nif (ENV === '<%= envDevName %>') {\n  console.log('%c`<%= humanTitle %>` bundle loaded asynchronously', 'color: gray');<% } %>\n}\n\n@NgModule({\n  imports: [<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "import { NgModule } from '@angular/core';\nimport { RouterModule } from '@angular/router';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>\n<% } %><% if (!inlineRoutes) { %>\nimport { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nconsole.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>\n<%= routeObject %><% } %>\n    ]<% } %>),<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [<% if (componentFile) { %>\n    <%= componentClass %>,<% } %>\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
+module.exports = "import { NgModule } from '@angular/core';\nimport { RouterModule } from '@angular/router';<% if (shared) { %>\n\nimport { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || componentFile) { %>\n<% } %><% if (!inlineRoutes) { %>\nimport { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>\nimport { <%= componentClass %> } from './<%= componentFile %>';<% } %>\n\nif (ENV === '<%= envDevName %>') {\n  console.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');\n}\n\n@NgModule({\n  imports: [\n    RouterModule.forChild(<% if (!inlineRoutes) print('ROUTES'); else { %>[<% if (componentFile) { %>\n<%= routeObject %><% } %>\n    ]<% } %>),<% if (shared) { %>\n    SharedModule,<% } %>\n  ],\n  exports: [\n  ],\n  declarations: [<% if (componentFile) { %>\n    <%= componentClass %>,<% } %>\n  ],\n  providers: [\n  ],\n})\nexport class <%= className %> {\n}\n"
 
 /***/ }),
 /* 29 */

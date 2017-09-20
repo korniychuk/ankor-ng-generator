@@ -6,7 +6,9 @@ import { SharedModule } from '<%= shared %>';<% } %><% if (!inlineRoutes || comp
 import { ROUTES } from './<%= routesFile %>';<% } %><% if (componentFile) { %>
 import { <%= componentClass %> } from './<%= componentFile %>';<% } %>
 
-console.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');
+if (ENV === '<%= envDevName %>') {
+  console.log('%c`<%= humanTitle %>` page bundle loaded asynchronously', 'color: gray');
+}
 
 @NgModule({
   imports: [

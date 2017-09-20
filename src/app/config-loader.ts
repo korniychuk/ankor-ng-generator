@@ -19,6 +19,10 @@ export class Config {
   public debuggerEnabled: boolean = true;
   public debuggerPackage: string = 'app/core/services';
 
+  public envDevName: string  = 'development';
+  public envProdName: string = 'production';
+  public envTestName: string = 'test';
+
   public constructor(data: Config = <Config> {}) {
     Object.assign(this, data);
   }

@@ -38,6 +38,7 @@ export default ({prog, fs, config, str}: Di) => prog
       shared: (opts.shared !== undefined ? opts.shared : config.sharedModuleEnabled)
                 ? config.sharedModulePath
                 : null,
+      envDevName: config.envDevName,
     });
 
     str.labelDone();
