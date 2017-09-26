@@ -289,7 +289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
@@ -959,7 +959,7 @@ module.exports = "import { Pipe, PipeTransform } from '@angular/core';<% if (deb
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The service description ...<% } %>\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.init();<% } %>\n  }<% if (hasInit) { %>\n\n  private init(): void {\n\n  }<% } %>\n\n}\n"
+module.exports = "import { Injectable } from '@angular/core';<% if (debug) { %>\n\nimport { DebugLevel, DebugService } from '<%= debug %>';<% } %>\n\n/**\n * <% if (description) print(description); else { %>The service description ...<% } %>\n *\n * @example\n *\n *     class ... {\n *       constructor(private <%= camelName %>: <%= className %>) {\n *\n *       }\n *     }\n *\n */\n@Injectable()\nexport class <%= className %> {<% if (debug) { %>\n\n  private debug: DebugService;<% } %>\n\n  public constructor(<% if (debug) { %>\n    debug: DebugService,<% } %>\n  ) {<% if (debug) { %>\n    this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>\n    this.initInternal();<% } %>\n  }<% if (hasInit) { %>\n\n  private initInternal(): void {\n\n  } // end initInternal()<% } %>\n\n}\n"
 
 /***/ }),
 /* 33 */

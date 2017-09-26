@@ -23,11 +23,11 @@ export class <%= className %> {<% if (debug) { %>
     debug: DebugService,<% } %>
   ) {<% if (debug) { %>
     this.debug = debug.factory(new.target.name, DebugLevel.All);<% } %><% if (hasInit) { %>
-    this.init();<% } %>
+    this.initInternal();<% } %>
   }<% if (hasInit) { %>
 
-  private init(): void {
+  private initInternal(): void {
 
-  }<% } %>
+  } // end initInternal()<% } %>
 
 }
