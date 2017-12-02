@@ -289,7 +289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports = {
 	"name": "ankor-ng-generator",
-	"version": "0.0.13",
+	"version": "0.0.14",
 	"description": "Angular 4 Entities Generator.",
 	"main": "dist/main.js",
 	"bin": {
@@ -340,7 +340,7 @@ module.exports = require("caporal");
 /* harmony export (immutable) */ __webpack_exports__["a"] = commonOptions;
 function commonOptions(prog) {
     return prog
-        .option('-d, --debug', 'Enable/Disable inject debug service', prog.BOOL, true)
+        .option('-d, --debug', 'Enable/Disable inject debug service', prog.BOOL)
         .option('-m, --description', 'Class description');
 }
 
